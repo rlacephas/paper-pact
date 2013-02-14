@@ -1,0 +1,18 @@
+\begin{tabular}{|c|c|r@{$\pm$}l|r@{$\pm$}l|r@{$\pm$}l|} \hline 
+CPU2006   &     & \multicolumn{6}{c|}{Profiling Overhead} \\ \cline{3-8} 
+Benchmark & $n$ & \multicolumn{2}{c|}{NEP} 
+                & \multicolumn{2}{c|}{PP} 
+                & \multicolumn{2}{c|}{PP-ET}  \\ \hline \hline 
+perlbench  & 7  & 34&4    & 89&31    & 166&54     \\ \hline
+bzip2      & 2  & 25&4    & 29&5     & 29&5       \\ \hline
+gcc        & 10 & 25&3    & 42&9     & 74&23      \\ \hline
+mcf        & 2  & 7&4     & -1.4&0.7 & 9&4        \\ \hline
+milc       & 2  & 3.7&0.3 & 9.9&0.2  & 16.8&0.1   \\ \hline
+gobmk      & 13 & 36&0.7  & 177&26   & 376&57     \\ \hline
+hmmer      & 2  & 38&1    & 40&1     & 38&2       \\ \hline 
+libquantum & 2  & 47&40   & 54&35    & 57&36      \\ \hline
+h264ref    & 4  & 24&2    & 44&3     & 64&7       \\ \hline
+lbm        & 2  & 2.6&0.1 & 10.4&3   & 11&3       \\ \hline
+sphinx3    & 2  & 9&0.3   & 16&1     & 17&0.2     \\ \hline \hline
+Average    & ---& 28&4    & 80&20    & 154&44     \\ \hline
+\end{tabular}

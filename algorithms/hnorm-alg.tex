@@ -1,0 +1,65 @@
+
+
+% Hierarchical Normalization
+
+\SetKwIF{If}{ElseIf}{Else}{if}{}{else if}{else}{endif}
+\begin{algorithm}[th]
+
+  \KwIn{A connected graph $G = (E,V)$, where $E$ is a set of
+  unweighted directed edges, and $V = (v,w)$ is a set of weighted
+  nodes.  Node weights may be uninitialized.}
+
+  \KwIn{A set of raw profiles $RP$. Each raw profile is a map from a
+  set of profile points to profiling metrics. (Assume that all profile
+  points are graph nodes, and all metrics are execution counts.)  The
+  set of nodes in each profile may be difference. The set of nodes in
+  the intersection between $G$ and the nodes in a profile may be
+  arbitrary.}
+
+  \KwOut{Each node $v_i$ in $G$ is assigned a {\it scale factor} $f_i$
+  and a {\it hierarchically-normalized weight} $h_i$ such that $w_i =
+  f_i \times h_i$.}
+
+  \Begin{
+    \BlankLine
+    domtree = dominatorTree($G$)\;\label{hnorm:domtree}
+
+    \BlankLine
+    \tcp{process each raw profile, assigning frequencies to graph nodes}
+    \For{profile $\in RP$~\label{hnorm:rawprofs}}{
+      partialProfile = profile.getRelevantCounterMap($G$)\;
+      \tcp{extract the raw execution counters}
+      \For{profilePoint $\in$ partialProfile\label{hnorm:profpoint}}
+      {
+        node = profilePoint.getGraphNode()\;
+        weight = profilePoint.getCounterValue()\;
+        node.setCounter(weight)\;
+      } %for counter in graphProfile
+
+      \BlankLine
+      \tcp{calculate relative (hierarchical) node frequencies}
+      dfi = depthFirstIterator(domtree, POST\_ORDER)\;\label{hnorm:dfirel}
+      \For{node $\leftarrow$ dfi.first \KwTo dfi.last\label{hnorm:dflooprel}}
+      {
+        parent = domtree.getParent(node)\;\label{hnorm:relFreqParent}
+        relativeFreq = node.getCounter() / parent.getCounter()\;
+        node.HNProfile.add(relativeFreq)\;\label{hnorm:relFreqAdd}
+      }
+    } %for p in profile
+
+    \BlankLine
+    \tcp{commit the bulk update and calculate scale factors}  
+    dfi = depthFirstIterator(domtree, PRE\_ORDER)\;\label{hnorm:dfiscale}
+    \For{node $\leftarrow$ dfi.first \KwTo dfi.last\label{hnorm:dfloopscale}}
+    {
+      node.HNProfile.commit(RP.size())\;\label{hnorm:commit}
+      p = domtree.getParent(node)\;\label{hnorm:scaleParent}
+      parentFreq = p.getScaleFactor()~$\times$~
+        p.expectedRelativeFreq()\;\label{hnorm:expectedRelFreq}
+      node.HNProfile.setScaleFactor(parentFreq)\;\label{hnorm:scaleSet}
+    }
+  } % begin
+
+  \caption{Hierarchical Normalization}
+  \label{alg:hnorm}
+\end{algorithm}

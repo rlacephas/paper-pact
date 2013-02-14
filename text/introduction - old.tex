@@ -1,0 +1,187 @@
+\rr{
+Purpose of the research:
+\begin{enumerate}
+\item Conduct experiments to study the current status of Combined profiling applied to inlining.
+\item Compare the results produced using the methodology with traditional approaches. (here we have to compare the results with the single run experiment) Probably this is the last experiment to be tried.
+\item Verify if the profiling makes any difference or not - by means of a random choice of functions to inline.
+\item Tune in the constant values of the system.
+\item Define which strategy it more appropriate to use in this approach to inlining, simple sort, or a more sophisticated choice, based on the knapsack problem.
+\end{enumerate}
+}
+
+%I guess this is it ...
+
+%=====================
+
+For most useful programs, execution depends on the program's input.
+Consequently, there is no optimally-efficient executable
+representation of high-level source code that, for instance, executes
+in the least possible amount of time for every program input.  Even
+given an optimization criteria, such as processing throughput, and a
+reasonable set of program inputs, creating an executable whose
+performance is optimal for that set of inputs is (provably)
+intractable. Moreover, it is infeasible to approach compiler design as
+a single problem.  Instead, compilers apply a series of {\it
+transformations} that attempt to improve
+the efficiency of a particular region of code in a specific way.  For
+instance, ~\ref{sec:inlining} presents a function-inlining
+transformation that replaces a function call by a copy of the body of
+the called function. This transformation improves program efficiency
+by eliminating the overhead of making function calls, while improving
+the effectiveness of subsequent transformations.
+
+Research in compiler transformations often demonstrates heroic efforts
+in both the identification and abstract analysis of opportunities to
+improve program efficiency, and in the concrete implementation of
+these ideas.  However, standard practices at the evaluation stage of
+the scientific process are modest at best, perhaps because code
+transformations have a long history of providing significant benefits
+in practical, every-day situations.  In most cases, compilers are
+evaluated using a collection of programs, with each program evaluated
+using a timing run on a single evaluation input.  The deficiencies of
+this evaluation process are particularly prevalent, and especially
+disconcerting, when {\it feedback-directed optimization} (\FDO) is
+used to guide a transformation.  In this scenario, instrumentation is
+inserted into the program during an initial compilation in order to
+collect a profile of the run-time behavior of the program during one
+or more training runs.  The profile is used in a second compilation of
+the program to help the compiler assess the benefit of code
+transformation opportunities.  The current standard practice for
+evaluating an \FDO\ compiler uses the profile of a single training
+input to guide transformations, and evaluates the transformed program
+with a single evaluation input.  These standard practices set program
+inputs as controlled variables.  However, performance evaluation
+should be generalizable to real-world program workloads.
+Consequently, the program-input dimensions of a rigorous evaluation of
+compiler performance must be manipulated variables.
+
+Performance evaluation is a challenging, multi-faceted problem.  In
+this research, performance is always assessed in terms of program
+execution time\footnote{Other measures of performance include power
+consumption and code size.}  One dimension of this challenge is the
+choice between evaluating throughput or latency.  Given a collection of tasks
+(\eg, the programs in a benchmark suite or runs of a single program on
+a workload of inputs), throughput measures the total time required to
+complete all tasks sequentially.  Conversely, latency considers the
+tasks in parallel and measures the task that takes the longest.
+Improving throughput means reducing average execution time; improving
+latency means reducing worst-case execution time.  Both types of
+performance are important, and both approaches to evaluation are
+valid. Fortunately, shifting focus is often as simple as changing the
+weighting used to combine measurements from the individual tasks.
+Different aspects of this work assume different performance goals and
+thus perform the weighting in different ways.  Consider each of these
+approaches as one possible option for evaluation, independent of the
+specific evaluation in which they appear.  A real-world application of
+any of the ideas presented here will have unique performance goals,
+and can mix-and-match these approaches as appropriate.
+
+Previous work has not addressed the problem of representing and
+utilizing multi-run profiles.  An \FDO\ compiler should not simply add
+or average profiles from multiple runs, because such a profile does
+not provide any information about the variations in program behaviors
+observed between different inputs. ~\cite{BerubePhD} uses {\it
+Combined Profiling} (\CP) to merge the profiles from multiple runs
+into a distribution model that allows code transformations to consider
+cross-run behavior variations.  Experimental results demonstrate that
+meaningful behavior variation is present in the program workloads,
+and that this variation is successfully captured and represented by
+the \CP\ methodology.
+
+%=====================
+
+This research uses a different approach and its goal is to assess the results
+of {\em combined profiling} (\CP). There have been some recent efforts trying
+to apply multiple profiles to \FDO\, and also to evaluate the performance of a
+program from multiple inputs. \CP\ can be applied to many different optimization
+techniques, such as inlining, loop unrolling, etc. We decided to apply \CP\ to
+inlining, because it allows many other optimization techniques to be performed
+afterwards.
+
+%=====================
+
+The \FDO-based inliner presented in ~\cite{BerubePhD}
+demonstrates how a transformation can use the information stored in a
+combined profile. The feedback-directed inlining framework sorts
+inlining opportunities according to parameterized reward functions that
+query a combined profile using distribution
+quantiles.  These components are brought together by
+performing a thorough cross-validated evaluation of the \CP-informed
+inliner.
+
+%=====================
+
+Proceeding with our research, we were challenged to define strategies for the
+inliner, and also to search for better parameter values for it. To address the former
+problem we defined three different algorithms to choose a good candidate for inlining.
+One acting as a best-search at each execution step, another that defines a set of
+better candidates in a knapsack fashion. The last one performs a random choice
+which allowed us to effectively compare our results for the strategy.
+
+For the problem of defining the best set point for the parameters, we decided to employ
+a Machine Learning technique in order to define a "sweet spot". This part of our research
+searched for a technique that could operate on limited data and unknown optimization
+space. The behavior of the optimization technique had to be steady in any space, because
+we didn't know whether the space of parameters is convex, or differentiable. And we could
+not afford to have many values for the parameter set. We decided to use the Simulated
+Annealing, or the SPSA - Simultaneous Perturbation Stochastic Approximation, because
+both techniques can deal with our constraints.
+
+%This paper shows our results on evaluating \CP\ and the application
+%case for inlining.
+
+%Although the usual way to do research in Feedback Directed Optimization
+%is to perform a single-run input training and single data testing, recently
+%are being developed other approaches to this problem. The main goal of
+%these new approaches is to perform multiple-runs under multiple data, because
+%some questions concerning the single-run approach arose, such as, is this
+%method accurate, or proper, or reliable?
+
+%In an attempt to answer to these questions the  {\it Combined Profiling} (\CP) 
+%methodology \cite{BerubePhD} was proposed.
+
+%CP can be used to assess many different compiling techniques, but we chose to
+%apply this methodology to study inlining.
+
+%The inlining technique enables series of transformations and
+
+%One of the problems with inlining is the parameter tuning, and choosing inlining strategies.
+
+%We're doing this for the first time using multiple data and multiple runs..
+
+%Our approach is to use an empirical validation of the CP process for the inlining case.
+
+%=====================
+
+Several open questions about the use of profiles collected from
+multiple runs of a program were addressed and assessed in \cite{BerubeISPASS12}.
+Now there are still some questions, as multiple profiles are
+combined. What is the impact of \CP\ in a controlled case study?
+\FDO\ decisions can be more accurate using \CP\ instead of single-run evaluation?
+How the parameters can be tuned in? Which strategy to be used, considering
+FDO?
+
+This paper addresses these questions by using an empirical validation of the \CP\ process
+for the inlining case. At first by arguing that the behavior variations in an application due
+to multiple inputs produces better \FDO\ decisions.  It also argues that the parameters can be
+tuned in using machine learning techniques. As already mentioned the case proposed was
+for inlining, and we compared the choice of candidate to inline using the best candidate of a
+sorted list with random choice, and with a more sophisticated choice, based on the knapsack
+problem. The application of \CP\ to other situations with multiple profiling instances, such as
+profiling program phases individually, is not within the scope of this paper.
+
+The main contribution of this paper are:
+\begin{itemize}
+\item {\it Assessment of combined profiling} (\CP), is performed using
+  the case of {\it inlining} and the behavior of single-runs and \CP-runs
+  are analyzed (Section~\ref{sec:results}).
+
+\item {\it Parameter tuning}, is done by a machine learning algorithm to find the 
+  sweetspot for a set of inlining parameters (Section~\ref{sec:ml}).
+
+\item {\it Inline candidates} can be chosen in many different ways, so
+  analyzing behavior variability for random choice, simple sort and
+  a version of the knapsack problem shed light to this problem (Section~\ref{sec:choice}).
+
+\end{itemize}
+

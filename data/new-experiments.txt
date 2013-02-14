@@ -1,0 +1,34 @@
+
+Two goals:
+		1.  Characterize the variability in the workload
+		2.  Quantify how well CP captures (1)
+
+
+New Research:
+1.  CP for the CG
+2.  HN with paths
+3.  CP and definite flow?
+4.  CFG vs IR: maintaining profile information through transformations
+
+2.  Overlap over the range of possilbe training workload sizes
+		- leave-one-out
+		- leave-two-out
+		- leave 3, ..., 997 out: 200 random samples
+		- leave 998 out (ie, vs two)
+		- leave 999 out (ie, vs single)
+		- or k-fold xval?
+
+3.  Overlap histograms
+
+4.  Two-sample Kolmogorov-Smirnov (K-S) test (Predicability)
+		- k-fold cross-validation (k=5,10,20,25)
+		- histogram the alpha values? (1 alpha per edge per fold)
+		- vertical scatter/violin plots of D vals with alpha isolines?
+
+
+Requirements:
+  - Split workload into k randomly selected parts
+	- Run a k-fold xval with a pluggable metric
+	- Repeatedly partition workload randomly, without repetition, into 
+    size m and n-m sub-workloads
+ 

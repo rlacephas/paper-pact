@@ -1,0 +1,97 @@
+
+
+Combined profiling is a data representation for profile information
+collected over multiple runs, and is motivated by the observation that
+program behavior is input dependent and varies from run to run.
+Therefore, the metrics in this evaluation assess the variation present
+in a program workload, and how this variation is stored in a \CP.
+These metrics are used to collect the results presented
+in \refSection{sec:results} and are calculated on a per-monitor
+basis. The presentation of the results uses probability densities to
+expose the distribution of values across monitors and thus allow a
+careful examination of the results.
+
+While \llvm\ has profiling facilities for both edge and path \CFG\
+profiling, it does not currently have any transformations that make
+use of \FDO\ information. Thus, the performance impact of combined
+profiles on compiled programs cannot yet be evaluated.
+
+\subsection{Behavior Variation}
+%\subsection{Coverage}
+
+One benefit of using multiple profiling runs is that these runs might
+exercise more of the program code than any individual run.  The
+dichotomy between a monitor being executed or unexecuted in a profile
+is perhaps the most obvious indicator of behavior variation.  We
+report the {\em coverage} of a monitor as the proportion of runs where
+the monitor executes.
+
+%\subsection{Maximum Probability}
+
+An FDO compiler uses profile information to predict future program
+behavior. If one behavior is very frequent, it may be sufficient for
+transformations to only consider this {\it dominating behavior}.
+A \CP\ histogram is a probability distribution: the probability of the
+monitor taking on a value within the range of a histogram bin is equal
+to the proportion of the histogram's total weight found in that
+bin. Thus, the most likely behavior of a monitor can be estimated by
+finding the bin containing the most weight.  The {\it maximum
+probability} of a monitor is the proportion of weight in the heaviest
+bin to the total weight in the histogram.  The total weight only
+includes weight from raw profiles that cover the monitor.
+
+% occupancy
+
+The {\it occupancy} of a histogram refers to the proportion of bins
+that contain non-zero weight, and thus indicates how weight is
+distributed within the histogram.  If the weight is distributed across
+the histogram, many bins will be used, but if weight is concentrated
+at a few points, then most histogram bins will be empty.  The number
+of non-empty bins is limited by the number of raw profiles combined.
+This evaluation reports the number of non-empty bins as a proportion
+of the maximum possible number of non-empty bins.
+
+% span
+
+Variation of program behaviors is practically relevant only if the
+variation is significant compared to typical monitor values.  The {\it
+span} of a histogram is the ratio between it's range and it's maximum
+value.  The lower-bound on the range is the smallest non-zero value in
+the histogram.
+
+\subsection{Drift}
+
+Ideally, building a combined profile incrementally should yield the
+same result as building it from a batch of raw profiles.  However,
+when histograms are combined in the incremental construction, weight
+is proportionally allocated to the overlapping bins in the new
+histogram.  This weight-distribution process can cause histogram
+weight to shift away from the observed value. {\it Drift} measures the
+difference between a combined profile built as a single batch versus
+one built fully incrementally from the same raw profiles.
+
+% \pb{``de-mathified''...}
+The final range, and thus the bin boundaries, of both histograms 
+will be identical because the extreme values in the data are fixed.
+The difference in weight between corresponding bins is due to drift.
+Summing these differences for all pairs of bins double-counts total
+drift: drift is half this sum, reported as a proportion of total
+histogram weight. This study reports drift using the merged results of
+5 different randomly-selected incremental combination orders.
+
+
+\REM{ % sliced-up remnants of original
+For monitor
+$R_n$, let $H^\cup_n$ be the histogram built in a single batch, and
+$H^\Sigma_n$ be the result of one-at-a-time incremental construction,
+both using $b$ bins.  
+
+Thus, the bin boundaries of the two histograms will also be
+identical. The drift of $R_n$ is the non-overlapping area of histogram
+bins when the batch histograms is overlaid on top of the incremental
+histogram: $\sum_{j=1}^b | (H^\cup_n[j] - H^\Sigma_n[j]) |$.
+
+This study reports drift as a proportion of total histogram weight,
+using the merged results of 5 different randomly-selected incremental
+combination orders.
+}

@@ -1,0 +1,51 @@
+
+% the \hspace is a trick to reduce the space taken by the empty column
+% between section of the table (vs just leaving it empty)
+\begin{tabular}{cc
+                r@{$\pm$}l
+                r@{$\pm$}l
+                r@{$\pm$}l
+                r@{$\pm$}l@{\hspace{0.01in}}r
+                r@{$\pm$}l
+                r@{$\pm$}l
+                r@{$\pm$}l}
+&&&& \multicolumn{12}{c}{\bf{Overhead (\%)}} \\ \cline{5-17}
+\bf{CPU2006} &  
+         & \multicolumn{2}{c}{\bf{Compile}}
+         & \multicolumn{6}{c}{\bf{Compilation Time}}
+        && \multicolumn{6}{c}{\bf{Profiling Run Time}} \\ 
+\cline{5-10} \cline{12-17}
+\bf{Benchmark} & \bf{$n$}
+         & \multicolumn{2}{c}{\bf{Time (s)}} 
+         & \multicolumn{2}{c}{NEP} 
+         & \multicolumn{2}{c}{PP} 
+         & \multicolumn{2}{c}{PP-ET}
+        && \multicolumn{2}{c}{NEP} 
+         & \multicolumn{2}{c}{PP} 
+         & \multicolumn{2}{c}{PP-ET} \\ \hline
+perlbench   & 7  & 48.9&0.0   & 93&3  & 31&2   & 55&2 
+                             && 34&4  & 89&31  & 166&54 \\
+bzip2       & 2  & 2.3&0.0    & 68&2  & 28&2   & 42&2 
+                             && 25&4  & 29&5   & 29&5   \\
+gcc         & 10 & 188.9&0.5  & 48&2  & 21&2   & 35&2 
+                             && 25&3  & 42&9   & 74&23  \\
+mcf         & 2  & 0.8&0.0    & 32&2  & 20&2   & 28&2 
+                             && 7&4   & -1&1   & 9&4    \\ 
+milc        & 2  & 4.7&0.0    & 37&2  & 18&2   & 38&2 
+                             && 4&0   & 10&0   & 17&0   \\ 
+gobmk       & 13 & 110.0&9.0  & 45&2  & 39&2   & 50&2 
+                             && 36&1  & 177&26 & 376&57 \\ 
+hmmer       & 2  & 8.8&0.0    & 30&2  & 18&2   & 39&2 
+                             && 38&1  & 40&1   & 38&2   \\ 
+libquantum  & 2  & 1.1&0.0    & 33&2  & 24&2   & 42&2 
+                             && 47&40 & 54&35  & 57&36  \\ 
+h264ref     & 4  & 24.3&0.1   & 75&2  & 18&2   & 29&2 
+                             && 24&2  & 44&3   & 64&7   \\ 
+lbm         & 2  & 0.4&0.0    & 36&2  & 39&2   & 48&2 
+                             && 3&0   & 10&3   & 11&3   \\ 
+sphinx3     & 2  & 6.6&0.0    & 37&2  & 25&2   & 49&2 
+                             && 9&0   & 16&1   & 17&0   \\ \hline 
+Average     &--- & \multicolumn{2}{c}{---} 
+                              & 49&12 & 26&4   & 41&5 
+                             && 28&4  & 80&20  & 154&44 \\ \hline
+\end{tabular}

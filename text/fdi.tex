@@ -1,0 +1,136 @@
+
+The feedback-directed inlining (\FDI) ~\cite{BerubePhD} evaluated in this work is
+fundamentally different than the existing static inliner in \llvm.
+The static inliner inlines small calls to remove call overhead with
+minimal increases in code size.  \FDI\ attempts to minimize the
+dynamic number of instructions executed by the program by inlining the
+most frequent calls.  While the static inliner considers call sites on
+a function-by-function basis, \FDI\ considers the set of inlining
+opportunities present at global scope in the current state of the
+program.
+
+% Remove the ``then'' keyword from if statements
+\SetKwIF{If}{ElseIf}{Else}{if}{}{else if}{else}{endif}
+\begin{algorithm}[t!p]
+\begin{small}
+  \input{Algorithms/fdi}
+\end{small}
+  \caption{\FDI\ worklist}
+  \label{alg:fdiworklist}
+\end{algorithm}
+
+\subsection{Worklist Algorithm}
+
+\refAlgorithm{alg:fdiworklist} presents an outline of the worklist
+algorithm used by \FDI.  The algorithm uses several data structures:
+\begin{description}
+
+\item[{\it candidates}]: \\
+  The worklist is a sorted list of candidates.
+  A call site is an inlining candidate if it is a direct call, and if
+  the callee does not contain a \name{setjump} nor has any previous
+  attempt to inline the callee failed.  Furthermore, the call site
+  must have executed at least once during profiling.
+
+\item[{\it ignored}]: \\
+  A list of call sites that are not inlining
+  candidates.  This list is maintained to enable correct and efficient
+  bookkeeping, and to allow any copies of these call sites created by
+  inlining their caller to be immediately ignored.
+
+\item[{\it callers}]: \\
+  A mapping from functions to the call sites that
+  call them.  This map allows for the re-scoring of call sites on the
+  event that a call is inlined into their callee.  That inlining will
+  change the callee's size, and may change the expected
+  simplifications possible if the callee is inlined.
+
+\item[{\it inlineResult}]: \\
+  A structure returned by inliner that
+  provides summary information regarding the transformation.  In
+  particular, it indicates if the attempted inlining failed.
+  \FDI\ enhances the default \llvm\ structure with co-indexed lists
+  identifying the new call sites created in the caller by inlining,
+  and their originating call sites in the callee.  This information is
+  required so that profile information can be estimated for the new
+  call sites.
+
+\end{description}
+
+At the start of \FDI, the \CProf\ is read in, and the histograms are
+associated with the appropriate call sites (\refLine{wl:init}).  Every
+call site is inserted into the callers list of their callee.  During
+initialization, each call site is evaluated, and added to either the
+candidates or ignored list, as appropriate.  When a call site is
+rejected for inlining, it is immediately and permanently moved from
+the list of candidates to the ignore list.  Transformations such as
+constant propagation or alias analysis can resolve the callee of an
+indirect call to a single possibility, thereby making it a direct
+call.  However, if the call is indirect when the call site is first
+discovered by the inliner, it is placed on the ignore list in spite of
+the possibility of future inlining resolving the call.  Calls to
+libraries and compiler built-in functions are also immediately ignored
+because they cannot be inlined.
+
+\subsection{Candidate Scoring}
+\label{inlining:scoring}
+
+The \llvm\ inliner makes inlining decisions at each call site by
+comparing the expected code growth to a fixed threshold.  \FDI\ takes
+a more directly execution-time-oriented approach to inlining and
+attempts to achieve the greatest reduction in executed instructions
+for the least amount of code growth.  Therefore, \FDI\ breaks the
+evaluation of a call site into three components: the expected inlining
+benefit, the expected code growth, and execution frequency of the call
+site.  Given a call site, \CS, the inlining candidate scoring
+function, \ScoreOf{\CS}, combines these three elements so
+that \refAlgorithm{alg:fdiworklist} can select the best (highest
+score) candidates for inlining first. \CP\ provides a rich
+characterization of execution frequency. Making use of that
+information is described in detail in \cite{BerubePhD}; for
+now, let $\RewardOf{\BenefitOf{\CS}, R_{\CS}}$ represent some function
+of the estimated (execution-frequency independent) inlining benefit at
+call site \CS\ and $R_{\CS}$, that call-site's \CP\ monitor.  Given
+the benefit function \BenefitOf{\CS} and a cost function \CostOf{\CS}
+described in this section, an inlining candidate's \Score\ is
+conceptually computed:
+
+$$ \ScoreOf{\CS} = \dfrac{\RewardOf{\BenefitOf{\CS}, R_{\CS}}}{\CostOf{\CS}} $$
+
+More details on Benefit and Cost functions can be found in \cite{BerubePhD}.
+
+\subsection{Finding the Best Candidate}
+\label{inlining:candidate}
+
+The best candidate to inlining is found by its own score. The way it is
+done is simply sorting the candidates list by their score values. So
+every time a new candidate is needed, just take the top one from the
+ordered list of candidates.
+
+But the ordering depends on scoring, and scoring is sensitive to some
+parameters values. For instance, the expected reduction/expansion for each
+function is directly dependent of its expected size, and the reduction/
+expansion define the benefit and the cost of a function, in other words, its
+own score. The parameters that can have some effect on the scoring function
+are the sizes of a instruction, a call, a return, a branch, an allocation,
+and a block.
+
+Depending on the values of these parameters, the scoring function returns
+different values for each function, and the ordering may be changed, which
+makes the inliner take different decisions. The sensitivity of the scoring
+function have a direct effect on the sorting of the candidates list, which
+also have a strong impact on inline decisions.
+
+To assure good decisions the system must have a good scoring function,
+meaning that its result allows a good ordering for the inliner. But, a good
+ordering depends on how accurate are the estimated scores. One way we can
+calibrate the scores is to run the system on some known benchmarks. This way
+the parameters can be calibrated to their best values, those who produce
+the best estimates.
+
+So there is a need to find a ``sweetspot'' on these values. The first idea is
+to apply machine learning techniques to search for it through a space of
+possible values. But there are also some issues, we cannot afford to have a
+huge number of acquisition points because the whole system takes a long time
+to process. Also, optimizing a function without knowing if it is differentiable,
+or convex, is not a trivial machine learning task.

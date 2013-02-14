@@ -1,0 +1,29 @@
+
+
+% the \hspace is a trick to reduce the space taken by the empty column
+% between section of the table (vs just leaving it empty)
+\begin{tabular}{r@{$\rightarrow$}lr@{$\rightarrow$}lr@{\hspace{0.01in}}rrrr@{\hspace{0.01in}}rrr}
+
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{} 
+  & & \multicolumn{3}{c}{\bf Raw}
+  & & \multicolumn{3}{c}{\bf Normalized} \\  \cline{6-8} \cline{10-12}
+\multicolumn{2}{c}{\bf Edge} \T & \multicolumn{2}{c}{\bf Dom}
+  & & {\bf P1}  & {\bf P2}  & {\bf P3}
+  & & {\bf P1'} & {\bf P2'} & {\bf P3'} \\ \hline
+
+IN&A \T & \multicolumn{2}{c}{} 
+             &&   100   & 100   & 200     &&   1.0  & 1.0 & 1.0 \\
+A&B   & IN&A &&   80    & 80    & 160     &&   0.8  & 0.8 & 0.8 \\
+A&G   & IN&A &&   20    & 20    & 40      &&   0.2  & 0.2 & 0.2 \\
+G&H   & A&G  &&   5,000 & 5,000 & 10,000  &&   250  & 250 & 250 \\
+H&G   & G&H  &&   4,980 & 4,980 & 9,960   &&   249  & 249 & 249 \\
+H&E   & G&H  &&   20    & 20    & 40      &&   4.0e-3  & 4.0e-3 & 4.0e-3 \\
+B&C   & A&B  &&   72    & 8     & 16      &&   0.9  & 0.1 & 0.1 \\
+C&D   & B&C  &&   5,000 & 5,000 & 10,000  &&   69.4 & 625 & 625 \\
+D&C   & C&D  &&   4,928 & 4,992 & 9,984   &&   1.0  & 1.0 & 1.0 \\
+D&E   & C&D  &&   72    & 8     & 16      &&   1.4e-2  & 1.6e-3 & 1.6e-3 \\
+B&F   & A&B  &&   8     & 72    & 144     &&   0.1  & 0.9 & 0.9 \\
+F&E   & B&F  &&   8     & 72    & 144     &&   1.0  & 1.0 & 1.0 \\
+E&OUT & IN&A &&   100   & 100   & 200     &&   1.0  & 1.0 & 1.0 \\ \hline
+
+\end{tabular}

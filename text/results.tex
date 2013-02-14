@@ -1,0 +1,23 @@
+
+\def\graphwidth{0.9\linewidth}
+
+
+\REM{ % irrlelvent!
+running at 2000Mhz, with 128KB L1, 512KB L2, 2MB L3 shared, and 4 GB
+of memory.
+}
+
+The first experiment was to tune in the value of the compiler parameters.
+ A machine learning algorithm was used to find the sweetspot for a set of
+ inlining parameters. As described in Section~\ref{sec:ml}, we used
+ SPSA - Simultaneous Perturbation Stochastic Approximation because we have no
+ supposition on the function and on the search space.
+
+The second experiment was performed to evaluate and compare two different cases,
+ the case of single-runs, and the case of \CP\-runs. Both cases are analyzed and
+ compared.
+
+The third experiment was conducted to verify and 
+  analyze behavior variability for random choice, simple sort and
+  a version of the knapsack problem. Particularly the latter version presented better results.
+

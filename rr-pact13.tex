@@ -1,0 +1,145 @@
+
+% Ricardo Rocha, January 21, 2013
+
+%\documentclass[times,10pt,twocolumn]{article} 
+%\usepackage{latex8}
+%\usepackage{times}
+
+%\documentclass[10pt]{IEEEtran}
+\documentclass[conference]{IEEEtran}
+% allow \thanks
+\IEEEoverridecommandlockouts
+
+\usepackage[pdftex]{graphicx}
+%%\usepackage{epsf}
+\usepackage[tight,footnotesize]{subfigure}
+%%\usepackage{multirow}
+%%\usepackage{tabularx}
+%\usepackage{setspace}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+%%\usepackage{algorithm2e}
+\usepackage{amsmath}
+%\usepackage{fullpage}
+\input{rr-common.tex}
+
+%\pagestyle{empty}
+\pagestyle{plain}
+
+
+% Colors on or off: Pick ONE
+\renewcommand{\ifColorText}[2]{\textcolor{#1}{#2}}  % Colors ON
+%\renewcommand{\ifColorText}[2]{{#2}}                % Colors OFF
+
+% Comments on or off: Pick ONE
+\renewcommand{\ifComments}[1]{{#1}}                 % Comments ON
+%\renewcommand{\ifComments}[1]{\REM{#1}}             % Comments OFF
+
+
+\newcommand{\abbrev}[2][Blue]{\ifColorText{#1}{\ensuremath{\mathrm{#2}}}}
+
+\def\llvm{{\ifColorText{Red}{{\tt LLVM}}}}
+\def\PP{{\ifColorText{Orange}{PP}}}
+\def\CP{{\ifColorText{RoyalBlue}{CP}}}
+\def\CEP{{\ifColorText{RoyalBlue}{CEP}}}
+\def\CPP{{\ifColorText{RoyalBlue}{CPP}}}
+\def\HN{{\ifColorText{OliveGreen}{HN}}}
+\def\CG{{\ifColorText{Periwinkle}{CG}}}
+\def\CFG{{\ifColorText{Fuchsia}{CFG}}}
+\def\FDO{{\ifColorText{Magenta}{FDO}}}
+\def\DF{{\ifColorText{Blue}{\ensuremath{\mathrm{DF}}}}}
+\def\FDI{{\ifColorText{Magenta}{FDI}}}
+\def\CS{\abbrev{CS}}
+
+\newcommand{\DFact}[2]{{\ifColorText{Blue}{\ensuremath{\mathrm{\DF}_{{#1}\rightarrow {#2}}}}}}
+
+
+\begin{document}
+\thispagestyle{empty}
+
+\title{An Empirical Evaluation of Combined Profiling}
+
+%\pagenumbering{arabic}
+
+%\authorinfo{\ }{\ }{\ }
+\author{\IEEEauthorblockN{Ricardo Luis de Azevedo da Rocha\thanks{This research was done while the nth author was in a sabbatical year at the University of Alberta, supported by grant 2011/17096-5 from the Funda\c{c}\~{a}o de Amparo \`{a} Pesquisa do Estado de S\~{a}o Paulo -- FAPESP.}}
+\IEEEauthorblockA{Dept. of Computing Engineering\\
+University of Sao Paulo and \\ Dept. of Computing Science \\ University of Alberta\\
+Edmonton, Alberta, T6G 2E8, Canada\\
+Email: rlarocha@usp.br\\ \hspace{53pt}azevedod@ualberta.ca}
+\and
+\IEEEauthorblockN{Paul Berube}
+\IEEEauthorblockA{Dept. of Computing Science\\
+University of Alberta\\
+Edmonton, Alberta, T6G 2E8, Canada\\
+Email: pberube@ualberta.ca}
+\and
+\IEEEauthorblockN{Bruno Rosa}
+\IEEEauthorblockA{Dept. of Computing Science\\
+University of Alberta\\
+Edmonton, Alberta, T6G 2E8, Canada\\
+Email: brosa@ualberta.ca}
+\and
+\IEEEauthorblockN{Jos\'{e} Nelson Amaral\thanks{This research is supported by fellowships and grants from the Natural Sciences and Engineering Research Council of Canada (NSERC), the Informatics Circle of Research Excellence (iCORE), and the Canadian Foundation for innovation (CFI).}}
+\IEEEauthorblockA{Dept. of Computing Science\\
+University of Alberta\\
+Edmonton, Alberta, T6G 2E8, Canada\\
+Email: amaral@cs.ualberta.ca}}
+
+
+\maketitle
+
+\rr{Title is not set, just to fill in the blank; The order of the authors is meaningless now}
+\begin{abstract}
+\input{text/abstract.tex}
+\end{abstract}
+
+\section{Introduction}
+	\label{sec:intro}
+	\input{text/introduction}
+
+\section{Combined Profiling}
+	\label{sec:cmbprof}
+	\input{text/cmbprof}
+
+\section{Function Inlining}
+	\label{sec:inlining}
+	\input{text/inlining}
+
+\section{\CP-Driven Feedback-Directed Inliner for \llvm}
+	\label{sec:fdi}
+	\input{text/fdi}
+
+\section{A Method for \CP-Driven \FDI}
+	\label{sec:method}
+	\input{text/method}
+
+\section{Machine Learning Methods}
+	\label{sec:ml}
+	\input{text/ml}
+
+\section{Choice Methods}
+	\label{sec:choice}
+	\input{text/choice}
+
+\section{Results}
+	\label{sec:results}
+	\input{text/results}
+
+\section{Related Work}
+	\label{sec:related}
+	\input{text/related}
+
+\section{Conclusion}
+	\label{sec:conclusion}
+	\input{text/conclusion}
+
+%\section*{Acknowledgments}
+%	\input{text/ack}
+
+%\bibliographystyle{latex8}
+%%\bibliographystyle{abbrv}
+\bibliographystyle{IEEEtran}
+\bibliography{local}
+
+
+\end{document}

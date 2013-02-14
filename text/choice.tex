@@ -1,0 +1,16 @@
+
+The scoring function, as mentioned in ~\ref{inlining:scoring} estimates the
+fitness of a function to be inlined, this way a function whose score is above
+zero ($0$) may be inlined, if the budget allows. But the algorithm that decides
+which function will be inlined is solely based in this information, not in the
+current budget value, nor in the other scores computed.
+
+In \cite{BerubePhD} the inlining algorithm sorts the candidates for inlining
+based on the score function. As the score takes into account estimated values for
+benefit and cost of inlining, we suggest to use it but aggregating the expenditure,
+the budget, and other scores besides the most fitted.
+
+The idea is to perform a knapsack algorithm considering all the scores above zero
+and the budget (the ``size'' of the knapsack). Proceeding this way we can optimize
+the amount of budget wasted for inlining.
+

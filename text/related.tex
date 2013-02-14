@@ -1,0 +1,119 @@
+
+Tuning compiler options is an expanding research area in compilers, as
+it can be observed in ~\cite{Milepost08}, where a full development
+environment to research on compiler tuning was proposed and developed.
+The model for compiler tuning uses a probability distribution to predict
+the actual empirical distribution of the compiler under study
+~\cite{BonillaICML2006}. These ideas are a key motivating factor for
+our research.
+
+%=============
+
+Most compilers take a single-run approach to \FDO: a single training run
+generates a profile, which is used to guide compiler transformations.
+Some profile file formats support the storage of multiple profiles
+(\eg, \llvm), but when such a file is provided to a compiler, either
+all profiles except the first are ignored, or a simple sum or average
+is taken across the frequencies in the collected profiles.
+
+Input characterization and workload reduction are not new problems.
+However, the similarity metrics used for clustering
+in \cite{BerubePhD} are unique in their applicability to
+workload reduction for an \FDO\ compiler.  Most input similarity and
+clustering work is done in the area of computer architecture, where
+research is largely simulation-based, thus necessitating small
+workloads of representative programs using minimally-sized inputs. The
+architectural metrics of benchmark programs are repeatedly scrutinized
+for redundancy, while smaller inputs are compared with large
+inputs. Alternatively, some work bypasses program behavior and
+examines the inputs directly.
+
+An early attempt to combine profiles is due to Fisher and
+Freudenberger. They measure instructions per break in control flow and
+sum profiles to provide better branch
+prediction~\cite{FisherASPLOS92}.  Such summations produce similar
+results to summing normalized frequencies.  While better than
+single-run profiles, they still yield poor behavior modeling in the
+presence of multiple program use cases and poor training input
+selection.
+
+Krintz and Calder annotate Java bytecode with the optimization
+decisions made in previous program runs so that the JVM can exploit
+the benefits of those decisions immediately in subsequent
+runs~\cite{KrintzPLDI01}.  However, this approach largely negates the
+inherent input-sensitivity of dynamic compilation.  %Furthermore, the
+%profile information from previous runs is lost, preventing the system
+%from detecting or considering the impacts of cross-run behavior
+%variations.  
+Sandya guides dynamic compilation with an off-line
+profile, but requires the user to specify a confidence level for the
+accuracy of that profile~\cite{Sandya04}.  The $N$ hottest methods in
+the off-line profile are candidates for dynamic compilation, and are
+compiled when a hotness threshold is exceeded.  With a high confidence
+level, the frequency stored in the off-line profile is used to
+initialize each method's hotness.  As the confidence level decreases,
+a reduced proportion of that frequency is used.  On-line profiling
+contributes to each method's hotness during execution until a
+threshold is exceeded and the method is compiled.  Thus, the
+input-sensitivity of the JIT can be maintained by setting a low
+confidence level for the off-line profile, but this approach largely
+negates the utility of supplying the off-line profile.  %Furthermore,
+%this approach does not solve the problem that the off-line profile is
+%taken from a single runs and thus cannot inform the JIT regarding the
+%variability of behaviors across different inputs.  
+
+Arnold \etal. use histograms to combine the profile information
+collected by a Java JIT system over multiple program
+runs~\cite{ArnoldOOPSLA05}.  The online profiler detects hot methods
+by periodically sampling the currently-executing method.  After each
+run of a program, histograms for the hot methods stored in a profile
+repository are updated.  %The histogram bins represent the number of
+%time the method is sampled during the execution of the program, and
+%thus represent the length of time spend executing that method in each
+%run.  While wall-clock execution time is important for a JIT system in
+%order to amortize time spent compiling code, this concern is not
+%relevant to an AOT compiler.  Furthermore, variations in execution
+%time may simply indicate scaled, rather than varying, program
+%behaviors.  For instance, the probability that a particular branch is
+%taken is likely to have little correlation with the number of times
+%that the branch is executed during a run.  The root of these issues is
+%the use of raw profile information in the histograms, a problem
+%addressed by the hierarchical normalization performed when
+%constructing combined profiles.
+
+Salverda \etal\ model the critical paths of a program by generating
+synthetic program traces from a histogram of profiled branch
+outcomes~\cite{SalverdaCGO08}. To better cover the program's
+footprint, they do an ad-hoc combination of profiles from SPEC
+training and reference inputs.  In contrast, combined profiling and
+hierarchical normalization provide a systematic method to combine
+profile information for multiple runs.
+
+Savari and Young build a branch and decision model for branch
+data~\cite{SavariYoungJIPL00}.  Their model assumes that the next
+branch and its outcome are independent of previous branches, an
+assumption that is violated by computer programs (\eg, correlated
+branches).  One distribution is used to represent {\em all events}
+from a run; distributions from multiple runs are combined using
+relative entropy --- a sophisticated way to find the weights for a
+weighted geometric average across runs.  %Thus, the model describes the
+%average branch probability of all branches in the program, and how
+%this average varies across inputs.  
+The model cannot provide
+specific information about a particular branch, which is exactly the
+information needed by \FDO.  However, this information is provided by
+combined profiles because each event is represented separately.
+
+Shen \etal. investigate the sensitivity of Java garbage collectors to
+the inputs given to programs~\cite{ShenSIGOPS09}.  They find that
+varying program inputs can dramatically change the impact of garbage
+collection on program performance, and that the best garbage collector
+for a program is not consistent across inputs.  %Furthermore, runs on
+%many inputs are required in order to adequately assess the performance
+%of the individual garbage collectors in order to select the collector
+%that best meets the desired performance goals.  
+These results suggest
+that a JIT that attempts to select the best garbage collector for the
+executing program at or near the beginning of execution could greatly
+benefit from the behavior-variation information collected in a
+combined profile over many runs.

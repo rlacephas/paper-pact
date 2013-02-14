@@ -1,0 +1,90 @@
+The reporting of performance based on experimental evaluation of
+systems still lacks rigor. Published evaluations reveal that many
+members of the system community still dwell under the assumption that
+it is enough to evaluate the performance of a technique by measuring
+the execution time of runs of a program with a single input. Moreover,
+many researchers fail to discuss how they address, and often do not report,
+variations in their measurements.  
+\REM{
+For instance, the 80 papers that
+appeared in PACT in 2009 and 2010 introduced 37 hardware architectures
+and 24 compilation or program analysis techniques, but only 6
+evaluations ran any programs on more than a single
+input. Encouragingly, 3 of the 4 instances of Ahead-Of-Time (AOT)
+profiling for static FDO did evaluate program performance on multiple
+inputs, though the number of inputs used remains small.  
+}
+Previous
+research found significant program behavior variations across inputs,
+but little research dealt with input-dependent
+behavior~\cite{BerubeISPASS06,BieniaPACT10Poster,,Gove07,Wall91}.
+
+Capturing behavior variations across inputs is important in the
+design of an AOT compiler where FDO consists of collecting information
+about the behavior of a program from training runs and then using this
+information for a new compilation of the
+program~\cite{SmithWDACO00}. A number of speculative code
+transformations are known to benefit from FDO, including speculative
+partial redundancy
+elimination~\cite{ChowChanPLDI97,GuptaBersonFangICCL98}, trace-based
+scheduling and others~\cite{BodikGuptaPLDI97,ChekuriMICRO96}. Several
+open questions remain about the use of profiles collected from
+multiple runs of a program.  \HL{How should the multiple profiles be
+combined? Is it sufficient to simply average the multiple
+measurements? Is it necessary to compute the parameters for an assumed
+statistical distribution of the measurements? Or is there a simple
+technique to combine the measurements and provide useful statistics to
+FDO?}
+
+This paper addresses these questions by arguing that the variations
+of behavior in an application due to multiple inputs should be taken
+into consideration in FDO decisions, but that a full parametric
+estimation of a statistical distribution is not only unnecessary,
+but might actually mislead the FDO decisions if the wrong parametric
+distribution is assumed or too many parameters need to be
+estimated. Instead, it proposes the use of a non-parametric empirical
+distribution that makes no assumptions about the shape of the actual
+distribution. The new technique presented here is called {\em Combined
+Profiling} (CP). \RW{The following main considerations guide the design of
+CP: (1) It must provide FDO with information about the variability of
+the application behavior over runs with different inputs; (2) CP must
+be computed incrementally, {\em i.e.} it should not require that the
+entire raw data from previous runs be available to add the impact of a
+new run; (3) It should be simple to compute and to understand; (4) It
+should capture more nuances of the program behavior than a simple
+average of profiles; (5) It should work for edge and path profiling in
+the control-flow graph, for context sensitive and context-insensitive
+call graphs, and for value profiling.}
+
+This new, statistically sound and practical, technique to combine
+multiple profiles allows relevant queries into the combined profile.
+As far as we know, this is the first work to address the issue of
+combining profiles from multiple runs of an application --- beyond the
+trivial averaging of raw profiles.  The main contributions are:
+\begin{itemize}
+\item {\it Combined profiling} (\CP), a statistically sound methodology
+  to combine data from multiple runs, including a space-efficient
+  combined representation and statistical queries to inform code
+  transformations (Section~\ref{sec:cmbprof}).
+
+\item {\it Hierarchical normalization}, an algorithm to maintain the 
+  local and global frame of reference for each monitor when combining
+  profiles (Section~\ref{sec:hnorm}).
+
+\item \HL{{\it Metrics} that quantify differences in dynamic 
+  code {\it coverage gain} between combined and single-run profiles,
+  and the probability, or {\it predictability}, of a single-run
+  profile given a combined profile (Section~\ref{sec:experimental}).}
+
+\REM{
+\item {\it Implementation of Path Profiling in \llvm} including several 
+  issues that needed to be addressed to build a practical and
+  efficient implementation of Ball-Larus path profiling in \llvm\
+  (Section~\ref{sec:LLVM-PP}).
+}
+
+\item {\it Experimental Evaluation} reporting the \HL{overhead} of
+  collecting path profiles in \llvm\ using benchmarks from the SPEC
+  \HL{and MiBench} suites (Section~\ref{sec:results}).
+\end{itemize}
+

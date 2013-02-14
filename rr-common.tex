@@ -1,0 +1,146 @@
+
+
+% very commonly used defs and commands
+
+% packages needed for THESE DEFS
+
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsfonts}
+\usepackage{epigraph}
+
+
+% General
+\newcommand{\tab}{\hspace{0.7cm}}
+\newcommand{\REM}[1]{}  
+\newcommand{\ti}[1]{\textsf{#1}}
+\def\descWidth{3in}
+
+
+% Abbreviations
+\def\eg{{\it e.g.}}
+\def\ie{{\it i.e.}}
+\def\etal{{\it et~al.}}
+\def\etc{{\it etc.}}
+\def\viz{{\it viz.}}
+\def\bwu{{\tt bwu}}
+
+% center a single cell of a table
+\newcommand{\cc}[1]{\multicolumn{1}{c}{#1}}
+\newcommand{\ccb}[1]{\multicolumn{1}{c}{\bf #1}}
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\mccb}[2]{\multicolumn{#1}{c}{\bf #2}}
+% extra top/bottom row spacing.  must be *in* a cell on the row
+\def\T{\rule{0pt}{2.1ex}}
+\def\B{\rule[-1.2ex]{0pt}{0pt}}
+
+
+% Math
+\newcommand{\vect}[1]{\ensuremath{\vec{#1}}}
+\newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
+
+% - sets
+\newcommand{\fancy}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\set}[2]{\ensuremath{\mathcal{#1}=\{#2\}}}
+\newcommand{\sset}[2]{\ensuremath{#1=\{#2\}}}
+
+% - statistics
+\def\V{\mathbb{V}}
+\def\E{\mathbb{E}}
+\def\P{\mathbb{P}}
+\def\dep{\ensuremath{\amalg}}
+\def\indep{\ensureath{\not\propto}} % This is not the symbol used in AllStat...
+
+
+% Names
+\def\bzip{{\tt bzip2}}
+\def\crafty{{\tt crafty}}
+\def\gap{{\tt GAP}}
+\def\gzip{{\tt gzip}}
+\def\mcf{{\tt mcf}}
+\def\parser{{\tt parser}}
+\def\vpr{{\tt vpr}}
+\def\gobmk{{\tt gobmk}}
+\def\gcc{{\tt gcc}}
+
+\def\Bzip{{\tt Bzip2}}
+\def\Crafty{{\tt Crafty}}
+\def\Gap{{\tt GAP}}
+\def\Gzip{{\tt Gzip}}
+\def\Mcf{{\tt Mcf}}
+\def\Parser{{\tt Parser}}
+\def\Vpr{{\tt Vpr}}
+\def\Gobmk{{\tt Gobmk}}
+\def\Gcc{{\tt Gcc}}
+
+
+
+% Colored stuff; Comments and References
+
+% Colors on or off: Pick ONE
+\newcommand{\ifColorText}[2]{\textcolor{#1}{#2}}  % Colors ON
+%\newcommand{\ifColorText}[2]{{#2}}                % Colors OFF
+
+% Comments on or off: Pick ONE
+\newcommand{\ifComments}[1]{{#1}}                 % Comments ON
+%\newcommand{\ifComments}[1]{\REM{#1}}             % Comments OFF
+
+\def\CProf{\ifColorText{Green}{CProf}}
+\newcommand{\funcname}[2][RoyalBlue]{\ifColorText{#1}{\ensuremath{\mathsf{#2}}}}
+\newcommand{\name}[1]{{\tt #1}}
+\newcommand{\iname}[1]{\ensuremath{\mathsf{#1}}}
+\newcommand{\funcOf}[3][RoyalBlue]{\funcname[#1]{#2(}{#3}\funcname[#1]{)}}
+
+\def\Benefit{\funcname{Benefit}}
+\newcommand{\BenefitOf}[1]{\funcOf{Benefit}{#1}}
+
+\def\Cost{\funcname{Cost}}
+\newcommand{\CostOf}[1]{\funcOf{Cost}{#1}}
+
+\def\Reward{\funcname{Reward}}
+\newcommand{\RewardOf}[1]{\funcOf{Reward}{#1}}
+
+\def\Score{\funcname{Score}}
+\newcommand{\ScoreOf}[1]{\funcOf{Score}{#1}}
+
+\newcommand{\am}[1]{\ifComments{\noindent\textcolor{red}{Nelson: {#1}}}}
+\newcommand{\pb}[1]{\ifComments{\noindent\textcolor{brown}{Paul: {#1}}}}
+\newcommand{\rr}[1]{\ifComments{\noindent\textcolor{blue}{Rocha: {#1}}}}
+\newcommand{\br}[1]{\ifComments{\noindent\textcolor{green}{Bruno: {#1}}}}
+
+\newcommand{\newT}[1]{\ifColorText{red}{{\ifComments{\tiny [ed]} #1}}}
+\newcommand{\HL}[1]{\ifColorText{BurntOrange}{\ifComments{\tiny [chk]} #1}}
+\newcommand{\RW}[1]{\ifColorText{CarnationPink}{\ifComments{\tiny [redo]} #1}}
+
+% modification for anonimity in double-blind reviewing
+% Parameter 1 is original text, parameter 2 is replacement text
+\newcommand{\doubleblind}[2]{#2}
+
+%-- Reference Chapter
+\newcommand{\refChapter}[1]{\ifColorText{blue}{Chapter~\ref{#1}}}
+%\newcommand{\refChapter}[1]{Chapter~\ref{#1}}
+
+%-- Reference Section
+\newcommand{\refSection}[1]{\ifColorText{Green}{Section~\ref{#1}}}
+%\newcommand{\refSection}[1]{\textcolor{green}{{\S}\ref{#1}}}
+%\newcommand{\refSection}[1]{Section~\ref{#1}}
+%\newcommand{\refSection}[1]{{\S}\ref{#1}}
+
+%-- Reference Table
+\newcommand{\refTable}[1]{\ifColorText{Plum}{Table~\ref{#1}}}
+%\newcommand{\refTable}[1]{Table~\ref{#1}}
+
+%-- Reference Figure
+\newcommand{\refFigure}[1]{\ifColorText{Red}{Figure~\ref{#1}}}
+%\newcommand{\refFigure}[1]{Figure~\ref{#1}}
+
+%-- Reference Figure
+\newcommand{\refAlgorithm}[1]{\ifColorText{Turquoise}{Algorithm~\ref{#1}}}
+%\newcommand{\refAlgorithm}[1]{Algorithm~\ref{#1}}
+
+%-- Reference Figure
+\newcommand{\refEqn}[1]{\ifColorText{Turquoise}{Equation~\ref{#1}}}
+%\newcommand{\refEqn}[1]{Equation~\ref{#1}}
+
+%-- Reference Line (of algorithm, by label)
+\newcommand{\refLine}[1]{\ifColorText{Turquoise}{line~\ref{#1}}}

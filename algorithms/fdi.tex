@@ -1,0 +1,78 @@
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+  \Input{Module M: Whole-program IR}
+  \Input{File cpFile: Combined profile}
+
+  \KwData{List$<$call site$>$ candidates, ignored}
+  \KwData{Map$<$Function $\rightarrow$ List$<$call site$>$ $>$ callers}
+
+  initialize(M, cpFile)\label{wl:init}\;
+  budget = computeCodeGrowthBudget()\label{wl:budget}\;
+  candidates.sort()\;
+
+  %\tcp{Inline the best candidate until the budget is exhausted or 
+  %     there's nothing left to inline}
+  \While{budget $> 0$  AND NOT candidates.empty}
+  {
+    %\tcp{remove best candidate}
+    source = candidates.popBest()\label{wl:pop}\;
+
+    %\tcp*{the best candidate should not be inlined!}
+    \If{source.score $\le 0$\label{wl:ifscore}}
+    {
+      {\bf break}\;
+    }
+
+    %\tcp{already know that callee cannot be inlined}
+    \If{source.callee.cannotInline\label{wl:ifcannot}}
+    {
+      ignored.add(source)\;
+      {\bf continue}\;
+    }
+
+    %\tcp{too big for remaining budget; skip it}
+    \If{source.expectedCodeGrowth $>$ budget\label{wl:ifbig}}
+    {
+      ignored.add(source)\;
+      {\bf continue}\;
+    }
+      
+    \tcp{Try to inline the candidate...}
+    inlineResult = LLVM.inlineIfPossible(source)\label{wl:inline}\;
+    \If{inlineResult.failed}
+    {
+      source.callee.setCannotInline()\;
+      ignored.add(source)\;
+      {\bf continue}\;
+    }
+%    {
+      \tcp{Inlining succeeded}
+      %\tcp{update budget using real code growht}
+      budget -= inlineResults.codegrowth\label{wl:cost}\;
+      %\tcp{the call site no longer exists}
+      callers[source.getCallee].delete(source)\label{wl:delcaller}\;
+      %\tcp{recalculate the score for the callers; their callee's size has changed}
+      \For{caller $\in$ callers[source.caller]\label{wl:evalcallers}}
+      {
+        caller.calcScore()\;
+      }
+      %\tcp{deal with any new call sites created by inlining}
+      \For{i $\leftarrow$ 1 \KwTo\ inlineResults.numInlinedCalls\label{wl:newcalls}}
+      {
+        target = inlineResults.inlinedCall[i]\label{wl:newcand}\;
+        original = inlineResults.originalCall[i]\label{wl:orig}\;
+        callers[target.getCallee].insert(target)\;
+
+        \eIf{ignored.contains(original) $> 0$\label{wl:invalid}}
+        {
+          target.histogram = 0\;
+          ignored.add(target)\;
+        }
+        {
+          target.histogram = source.histogram $\times$ original.histogram\label{wl:newhist}\;
+          target.calcScore()\;
+          candidates.insert(target)\;
+        } % eIf
+      } % For
+%    } % eIf
+ }

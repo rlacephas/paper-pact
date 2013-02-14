@@ -1,0 +1,21 @@
+Raw
+
+Extra Max:      378
+Extra Mean:     230.401
+Extra Variance: 8135.450199
+Missing Max:      3
+Missing Mean:     0.008
+Missing Variance: 0.0219359999999994
+
+Percents
+
+Extra Max:      37.8
+Extra Mean:     23.0401
+Extra Variance: 81.35450199
+Missing Max:      0.3
+Missing Mean:     0.0008
+Missing Variance: 0.000219359999999997
+
+
+
+
