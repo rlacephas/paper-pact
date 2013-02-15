@@ -74,6 +74,17 @@ S.~Zhong, Y.~Shen, and F.~Hao, ``Tuning compiler optimization options via
   Engineering, 2009. FITME '09. Second International Conference on}, dec. 2009,
   pp. 305 --308.
 
+\bibitem{SanchezCGO11}
+R.~Nabinger-Sanchez, J.~N. Amaral, D.~Szafron, M.~Pirvu, and M.~Stoodley,
+  ``Using machines to learn method-specific compilation strategies,'' in
+  \emph{Code Generation and Optimization ({CGO})}, Chamonix, France, April
+  2011.
+
+\bibitem{KulkarniCGO13}
+S.~Kulkarni, J.~cavazos, C.~Wimmer, and D.~Simon, ``Automatic construction of
+  inlining heuristics using machine learning,'' in \emph{Code Generation and
+  Optimization ({CGO})}, Shenzhen, China, February 2013.
+
 \bibitem{Spall1999}
 J.~C. Spall, \emph{Stochastic Optimization: Stochastic Approximation and
   Simulated Annealing}, 1st~ed.\hskip 1em plus 0.5em minus 0.4em\relax New
