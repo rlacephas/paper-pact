@@ -455,5 +455,47 @@
     <path fill="rgb(0,0,0)" stroke="none" d="M 10487,13743 L 10258,13667 10258,13820 10487,13743 Z"/>
    </g>
   </g>
+  <g class="com.sun.star.drawing.CustomShape">
+   <g>
+    <g>
+     <defs>
+      <pattern id="pattern1" x="1000" y="7249" width="6351" height="12828" patternUnits="userSpaceOnUse">
+       <g transform="translate(-1000,-7249)">
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="7908" x2="1659" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="8619" x2="2370" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="9330" x2="3081" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="10041" x2="3792" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="10752" x2="4503" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="11463" x2="5214" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="12174" x2="5925" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="12885" x2="6636" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="13596" x2="7347" y2="7249"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="14307" x2="7350" y2="7957"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="15018" x2="7350" y2="8668"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="15729" x2="7350" y2="9379"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="16440" x2="7350" y2="10090"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="17151" x2="7350" y2="10801"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="17862" x2="7350" y2="11512"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="18573" x2="7350" y2="12223"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="19284" x2="7350" y2="12934"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1000" y1="19995" x2="7350" y2="13645"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="1630" y1="20076" x2="7350" y2="14356"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="2341" y1="20076" x2="7350" y2="15067"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="3052" y1="20076" x2="7350" y2="15778"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="3763" y1="20076" x2="7350" y2="16489"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="4474" y1="20076" x2="7350" y2="17200"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="5185" y1="20076" x2="7350" y2="17911"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="5896" y1="20076" x2="7350" y2="18622"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="6607" y1="20076" x2="7350" y2="19333"/>
+        <line fill="rgb(0,0,0)" stroke="rgb(0,0,0)" x1="7318" y1="20076" x2="7350" y2="20044"/>
+       </g>
+      </pattern>
+     </defs>
+     <path style="fill:url(#pattern1)" d="M 4175,20076 L 1000,20076 1000,7249 7350,7249 7350,20076 4175,20076 Z"/>
+    </g>
+    <path fill="none" stroke="rgb(128,128,128)" d="M 4175,20076 L 1000,20076 1000,7249 7350,7249 7350,20076 4175,20076"/>
+    <rect fill="none" stroke="none" x="1000" y="7250" width="6351" height="12828"/>
+   </g>
+  </g>
  </g>
 </svg>

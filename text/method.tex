@@ -17,7 +17,38 @@ compiled program. And, in the center of the figure rests the compiler.
 We can use this method for parameter tuning, and also for a machine
 learning approach trying to define the best set of parameters for
 throughput or for latency. The process remains the same, we just have
-to define properly what is a point of measure.
+to define properly what is a point of measure. More details on the
+\CP\ profiling in \refFigure{fig:CPview}, whereas in \refFigure{CP:simple}
+the simplified view is presented and the hatched area marks the \CP\
+compiler; and in \refFigure{CP:expanded} the \CP\ compiler is shown in
+more detail.
+
+\begin{figure}
+  \centering
+  
+  \begin{minipage}[t]{\linewidth}
+    \subfigure[Simplified view of the process] {
+      \begin{minipage}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=12em]{Figures/CPview1}
+      \end{minipage}
+      \label{CP:simple}
+    }
+    \subfigure[Expanded view of the process] {
+      \begin{minipage}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=12em]{Figures/CPview2}
+      \end{minipage}
+      \label{CP:expanded}
+    }
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
+  \end{minipage}
+  \caption{\CP\ compiler and the profile generation}
+  \label{fig:CPview}
+\end{figure}
+
 
 In the case of parameter tuning a point of measure is represented by
 the set of parameter values of the compiler for the program under tuning
