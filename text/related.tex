@@ -8,6 +8,7 @@ the actual empirical distribution of the compiler under study
 our research.
 
 %=============
+\subsection{\FDO-related}
 
 Most compilers take a single-run approach to \FDO: a single training run
 generates a profile, which is used to guide compiler transformations.
@@ -28,14 +29,15 @@ for redundancy, while smaller inputs are compared with large
 inputs. Alternatively, some work bypasses program behavior and
 examines the inputs directly.
 
-An early attempt to combine profiles is due to Fisher and
-Freudenberger. They measure instructions per break in control flow and
-sum profiles to provide better branch
-prediction~\cite{FisherASPLOS92}.  Such summations produce similar
-results to summing normalized frequencies.  While better than
-single-run profiles, they still yield poor behavior modeling in the
-presence of multiple program use cases and poor training input
-selection.
+% =========> already used in ISPASS'12
+%An early attempt to combine profiles is due to Fisher and
+%Freudenberger. They measure instructions per break in control flow and
+%sum profiles to provide better branch
+%prediction~\cite{FisherASPLOS92}.  Such summations produce similar
+%results to summing normalized frequencies.  While better than
+%single-run profiles, they still yield poor behavior modeling in the
+%presence of multiple program use cases and poor training input
+%selection.
 
 Krintz and Calder annotate Java bytecode with the optimization
 decisions made in previous program runs so that the JVM can exploit
@@ -117,3 +119,38 @@ that a JIT that attempts to select the best garbage collector for the
 executing program at or near the beginning of execution could greatly
 benefit from the behavior-variation information collected in a
 combined profile over many runs.
+
+\subsection{Inline-related}
+
+Arnold \etal. present an inlining strategy similar to that used in
+modern compilers~\cite{Arnold00}. They use a call-site sensitive call
+graph profile, thus allocating procedure executions frequencies to
+individual call sites.  Using code size expansion as the cost and
+call site frequency as the benefit, call sites are inlined in
+decreasing cost/benefit order up to a code expansion limit.  They
+find that a 1\% code size expansion limit accounts for 73\% of dynamic
+calls and reduces execution time by 9\% to 57\%.
+
+Zhao and Amaral investigate \FDO\ inlining in the Open Research
+Compiler (ORC)~\cite{Zhao03}.  The original benefit of inlining a
+call site in the ORC is measured by a {\it temperature} metric that
+takes the ratio of execution time spent in the callee compared to the
+total program execution time, weighted by the normalized frequency of
+the call compared to the invocation frequency of the caller.
+Temperature is intended to identify frequently-executed call sites to
+small callees, but infrequent calls to functions containing high
+trip-count loops will also result in a high temperature.  An improved
+metric corrects this deficiency.  A second improvement proposed in
+this work is adaptive inlining, which allows the temperature threshold
+required to inline a call site to vary with program size.  Thus,
+smaller programs, which tend to benefit more from inlining, allow more
+aggressive inlining than larger programs, which tend to suffer more
+from the negative effects of excessive code growth.
+
+Kulkarni \etal. considered the automatic construction of heuristics for
+inlining using Machine Learning techniques \cite{KulkarniCGO13}. In this
+research they used an unsupervised learning model based on NEAT
+(Neuro-Evolution of Augmenting Topologies) method to generate new heuristics
+for inlining in two different platforms: The Maxine VM, and the HotSpot VM.
+They reported a speedup of 11 \% on average on the Maxine VM, and 15 \% on
+average on the Java HotSpot VM.

@@ -68,6 +68,24 @@ C.~Lattner and V.~Adve, ``{LLVM: A Compilation Framework for Lifelong Program
   Analysis \& Transformation},'' in \emph{Code Generation and Optimization
   ({CGO})}, San Jose, CA, USA, March 2004.
 
+\bibitem{Arnold00}
+M.~Arnold, S.~Fink, V.~Sarkar, and P.~F. Sweeney, ``A comparative study of
+  static and profile-based heuristics for inlining,'' Boston, Massachusetts,
+  January 2000, pp. 52--64.
+
+\bibitem{Scheifler1977}
+\BIBentryALTinterwordspacing
+R.~W. Scheifler, ``An analysis of inline substitution for a structured
+  programming language,'' \emph{Commun. ACM}, vol.~20, no.~9, pp. 647--654,
+  Sep. 1977. [Online]. Available:
+  \url{http://doi.acm.org/10.1145/359810.359830}
+\BIBentrySTDinterwordspacing
+
+\bibitem{Garey1979}
+M.~R. Garey and D.~S. Johnson, \emph{Computers and Intractability: A Guide to
+  the Theory of NP-Completeness}.\hskip 1em plus 0.5em minus 0.4em\relax New
+  York, NY, USA: W. H. Freeman \& Co., 1979.
+
 \bibitem{Zhong2009}
 S.~Zhong, Y.~Shen, and F.~Hao, ``Tuning compiler optimization options via
   simulated annealing,'' in \emph{Future Information Technology and Management
@@ -114,12 +132,6 @@ E.~V. Bonilla, C.~K.~I. Williams, F.~V. Agakov, J.~Cavazos, J.~Thomson, and
   \url{http://doi.acm.org/10.1145/1143844.1143860}
 \BIBentrySTDinterwordspacing
 
-\bibitem{FisherASPLOS92}
-J.~A. Fisher and S.~M. Freudenberger, ``Predicting conditional branch
-  directions from previous runs of a program,'' in \emph{Intern. Conf. on
-  Architectural Support for Programming Languages and Operating Systems
-  ({ASPLOS})}, 1992, pp. 85--95.
-
 \bibitem{KrintzPLDI01}
 C.~Krintz and B.~Calder, ``Using annotations to reduce dynamic optimization
   time,'' in \emph{Conference on Programming Language Design and Implementation
@@ -156,5 +168,10 @@ X.~Shen, F.~Mao, K.~Tian, and E.~Z. Zhang, ``The study and handling of program
   \url{http://doi.acm.org.login.ezproxy.library.ualberta.ca/10.1145/1618525.16%
 18531}
 \BIBentrySTDinterwordspacing
+
+\bibitem{Zhao03}
+P.~Zhao and J.~N. Amaral, ``To inline or not to inline? {Enhanced} inlining
+  decisions,'' in \emph{Workshop on Languages and Compilers and Parallel
+  Computing ({LCPC})}, October 2003.
 
 \end{thebibliography}

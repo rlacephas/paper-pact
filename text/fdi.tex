@@ -19,6 +19,107 @@ program.
   \label{alg:fdiworklist}
 \end{algorithm}
 
+What \FDI\ does is to set the problem as one of constrained minimization,
+the {\it Substitution Problem}. So, for a particular program, a subset of
+all invocations, the values of maximum program size, maximum callee size,
+etc, find a sequence of substitutions that can minimize the expected
+program execution time. And this is done by following the order of the
+candidate call sites in the candidates list. The list is ordered by the
+score of each candidate.
+
+The assumption is that this is an efficient reduction of the Knapsack
+Problem to the Substitution Problem \cite{Arnold00,Scheifler1977}. The
+Knapsack Problem is known to be NP-hard \cite{Garey1979}, so it's
+intractable. To peform the reduction, we first assume that it is
+possible to construct an invocation with any integral execution time
+overhead. The second assumption is that it is possible to construct a
+procedure of any integral size less than the maximum.
+
+\rr{Hidden text extracted from Scheifler1977}
+%We define the maximum procedure size so that all
+%substitutions are possible, but we constrain the maxi-
+%mum program size increase to k. By construction, the
+%execution time saved by any sequence of substitutions
+%will be exactly the same as the resultant size increase,
+%and so the maximum time savings possible is k. If there
+%is a subsequence of S that sums to k, then there is a
+%sequence of substitutions that will obtain the maximum
+%time savings. Conversely, if there is a sequence that
+%obtains the maximum time savings, then there is a
+%subsequence of S that sums to k. Hence we can solve
+%the Knapsack Problem by solving the Substitution
+%Problem. Any tractable solution to the Substitution
+%Problem is thus a tractable solution to the Knapsack
+%Problem, for we can certainly perform the above con-
+%struction in polynomial time.
+%
+%The reduction we have given depends on the fact
+%that the maximum procedure size and maximum pro-
+%gram size can be made arbitrarily large. If there are
+%absolute bounds on these sizes, it may be possible to
+%solve the Substitution Problem in polynomial time.
+%However, as long as the bounds are reasonably large,
+%the polynomial will be of very high degree, and so the
+%problem is still essentially intractable.
+%
+%In view of the above, it is reasonable to take an
+%engineering approach and make certain approxima-
+%tions in a manner that will arrive, we hope, at a near-
+%optimal solution. To begin, we need some measure of
+%size and some measure of the execution time overhead
+%for any given invocation. The size change resulting
+%from a substitution is easy to compute, but we need a
+%method for determining how the overhead of an invo-
+%cation changes as other invocations are expanded. We
+%make several practical approximations to fulfill these
+%needs and then return to the actual problem solution at
+%the end of this section)
+%
+%The algorithm we choose has three distinct phases.
+%At each step in the first phase, every substitution that
+%will result in a nonpositive basic size change is per-
+%formed, independent of the time saved; the process
+%repeats until no further substitutions are possible by
+%this rule. The basic size change for a substitution is the
+%change in the size of the procedure body containing the
+%invocation. The reduction in program size possible if
+%the called procedure can be removed is n o t counted in
+%the basic size change, but it/s counted in determining
+%the program size after the substitution. We use the
+%basic size change in an attempt to keep procedure sizes
+%small. As a heuristic, we would rather substitute a small
+%frequently called procedure often than expand one in-
+%vocation of a very large procedure within that small
+%procedure.
+%
+%The second phase is the heart of the algorithm. At
+%each step, the invocation with the highest ratio of
+%expected executions to basic size change, whose expan-
+%sion will not violate the procedure size constraint, is
+%expanded. Any invocations created by the substitution
+%are available at the next step. The order of substitution
+%can be computed very cheaply by using this rule, but
+%there are no mathematical guarantees that the result
+%will be near-optimal. 4 The hope, of course, is that good
+%results are obtainable for this specific application and
+%that more expensive calculations are not required. Sub-
+%stitutions continue according to this rule until the maxi-
+%mum program size is just exceeded. We prefer not to
+%complicate the rule to avoid violating the size con-
+%straint; the maximum is, after all, only approximate,
+%and in general the additional increase will be small.
+%
+%Once the second phase is complete, it still may be
+%possible to expand some invocations without increasing
+%the total program size. When a nonrecursive procedure
+%has exactly one invocation to it remaining in the entire
+%program and the procedure is known not to be called by
+%any other mechanism, expansion of the invocation also
+%allows the procedure to be removed, and little if any
+%total size increase is involved. All such expansions that
+%do not violate the procedure size constraint are per-
+%formed in the third and final phase.
+
 \subsection{Worklist Algorithm}
 
 \refAlgorithm{alg:fdiworklist} presents an outline of the worklist
