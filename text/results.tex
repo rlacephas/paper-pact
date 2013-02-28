@@ -21,3 +21,127 @@ The third experiment was conducted to verify and
   analyze behavior variability for random choice, simple sort and
   a version of the knapsack problem. Particularly the latter version presented better results.
 
+\subsection{Programs and Inputs}
+
+
+This study evaluates the inliners described above using four
+programs: \bzip, \gzip, \gcc, and \gobmk.  Each program is evaluated
+using a 15-input workload, as suggested
+in \cite{BerubePhD}.  \Gcc\ and \gobmk\ are taken from the
+SPEC CPU 2006 benchmark suite.  SPEC provides 11 inputs for \gcc.  In
+spite of the challenges involved in creating new inputs for this
+benchmark, four\footnote{of seven attempts} of the SPEC 2000 benchmark
+programs were converted to the single pre-processed file format.  The
+converted programs are \bzip, \lbm, \mcf, and \parser.  For \gobmk,
+SPEC provides 20 inputs.  However, only 5 of these inputs come from
+the {\tt ref} workload; the {\tt train} workload contains 8 inputs,
+and the {\tt test} workload contains 7 inputs.  Many of the inputs from
+{\tt test} and {\tt train} have very short execution times: 4 inputs
+take less than 1 second, 6 take 2--9 seconds, 4 take 12--19 seconds,
+and 1 takes longer than 1 minute.  Execution times of less than a few
+seconds are subject to large proportional timing imprecision, because
+the Linux {\tt time} command reports times with a resolution of
+1/100$^{th}$ of a second.  Therefore, the 15 longest-running inputs
+are chosen for \Wfull.  This set is composed of the {\tt ref} and {\tt
+train} SPEC workloads, plus \iname{connect} and \iname{dniwog} from
+{\tt test}.  The shortest baseline running time in \Wfull\ is 2.3
+seconds, for \iname{connect}.
+
+The other two programs used in the case study are \bzip\ and \gzip.
+However, rather than using the SPEC benchmark versions of these
+programs, the fully-functional ``real'' versions are used.  Using the
+real versions of the compressor programs eliminates the
+unrealistically-simplified profiling situation where
+mutually-exclusive use cases are combined into a single program run.
+Consequently, these programs cannot do decompression and compression,
+or multiple levels of compression, within the same run.  These
+distinct use-cases must be covered by different inputs in the program
+workload.  Both \bzip\ and \gzip\ share the same workload of inputs.
+This workload is split in half into a compression set and a
+decompression set.  Several inputs in the compression set have an
+analogue in the decompression set.  However, the file format is
+usually different, and the source of the data is never the same.  For
+instance, \iname{revelation\mbox{-}ogg} in the compression set
+and \iname{sherlock\mbox{-}mp3} in the decompression set are both audio
+books, but the audio is recorded in different formats, and the books
+themselves are different.
+
+Both compressors use a numeric command-line flag to control the
+tradeoff between compression speed and compression quality.  The flags
+take integer values between 1 (fastest, least compressed) and 9
+(slowest, most compressed).  The seven inputs in the compression set
+each use a different compression level, from 3 to 9.  Most inputs are
+collections of files.  Each collection is archived (uncompressed) so
+that the input and output of each run is a single file.  In order to
+minimize the impact of disk access, the output of each run is
+redirected to {\tt /dev/null}.
+
+The compression set contains the following inputs, with the
+compression level shown in parentheses:
+\begin{itemize}
+
+\item {\tt avernum (-3)}: The installer for the demo version of the game
+  ``Avernum: Escape from the Pit'' from Spiderweb Software.
+
+\item {\tt cards (-4)}: A collection of greeting card layouts in the TIFF 
+  (uncompressed) image format.
+
+\item {\tt ebooks (-5)}: A collection of ebooks, with and without images,
+  and in a variety of formats, from Project
+  Gutenberg\footnote{http://www.gutenberg.org}.
+
+\item {\tt potemkin-mp4 (-6)}: The 1925 movie ``Bronenosets Potyomkin
+  (Battleship Potemkin)'' in MP4 format, from the Internet
+  Archive\footnote{http://archive.org/details/BattleshipPotemkin}.
+
+\item {\tt proteins-1 (-7)}: A sample of 33 proteins from the RCSB Protein Data
+  Bank database.  6 files for each protein, each stored in a different
+  text-based format, provide different characteristics of the protein's
+  structure\footnote{http://www.rcsb.org}.
+
+\item {\tt revelation-ogg (-8)}: The audio book ``The Revelation of Saint
+  John'' in OGG format, from Project
+  Gutenberg\footnote{http://www.gutenberg.org/ebooks/22945}.
+
+\item {\tt usrlib-so (-9)}: A collection of shared object (.so) files from {\tt
+  /usr/lib/} of a 32-bit gentoo-linux machine.
+
+\end{itemize}
+
+The decompression set for each compressor uses the same base set of
+files, pre-compressed by the appropriate compressor at the default
+compression level.  The decompression set is composed of:
+\begin{itemize}
+\item {\tt auriel}: The ``Auriel's Retreat'' land-mass addition mod by
+  lance4791 for the game ``The Elder Scrolls IV: Oblivion'' from
+  Bethesda
+  Softworks\footnote{http://planetelderscrolls.gamespy.com/View.php?view=OblivionMods.Detail\&id=5949}.
+
+\item {\tt gcc-453}: The source-code archive of the \gcc\ compiler,
+  version 4.5.3\footnote{http://gcc.gnu.org/gcc-4.5}.
+
+\item {\tt lib-a}: A collection of library files (.a) from {\tt /lib/} of a
+  gentoo-linux machine.  As per the gentoo development guide, a
+  library will be installed in {\tt /lib} (boot critical) or {\tt
+    /usr/lib} (general applications), but not both\footnote{
+    http://devmanual.gentoo.org/general-concepts/filesystem/index.html}.
+
+\item {\tt mohicans-ogv}: The 1920 movie ``Last of the Mohicans'' in OGV
+  (ogg video) format, from the Internet
+  Archive\footnote{http://archive.org/details/last\_of\_the\_mohicans\_1920}.
+
+\item {\tt ocal-019}: The Open Clip Art Library archive, version 0.19.  The
+  images are primarily in vector-graphics
+  formats\footnote{http://openclipart.org/collections}.
+
+\item {\tt paintings-jpg}: A collection of watercolor paintings, in JPG format.
+
+\item {\tt proteins-2}: A completely different sample of 157 proteins from
+  the RCSB Protein Data Bank database, each in 6 different file
+  formats.
+
+\item {\tt sherlock-mp3}: The audio book ``The Adventures of Sherlock
+  Holmes'' in MP3 format, from Project
+  Gutenberg\footnote{http://www.gutenberg.org/ebooks/28733}.
+
+\end{itemize}
