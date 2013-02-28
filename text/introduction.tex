@@ -112,8 +112,9 @@ inliner.
 %=====================
 
 Proceeding with our research, we were challenged to define strategies for the
-inliner, and also to search for better parameter values for it. To address the former
-problem we defined three different algorithms to choose a good candidate for inlining.
+inliner, and also to search for better parameter values for it. But we know that
+this set is not suited to all benchmarks, as reported in Kulkarni \etal \cite{KulkarniCGO13}.
+To address the former problem we defined three different algorithms to choose a good candidate for inlining.
 One acting as a best-search at each execution step, another that defines a set of
 better candidates in a knapsack fashion. The last one performs a random choice
 which allowed us to effectively compare our results for the strategy.

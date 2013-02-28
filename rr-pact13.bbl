@@ -25,6 +25,11 @@
 PaulBerube, ``Methodologies for many-input feedback-directed optimization,''
   Ph.D. dissertation, University of Alberta, 2012.
 
+\bibitem{KulkarniCGO13}
+S.~Kulkarni, J.~cavazos, C.~Wimmer, and D.~Simon, ``Automatic construction of
+  inlining heuristics using machine learning,'' in \emph{Code Generation and
+  Optimization ({CGO})}, Shenzhen, China, February 2013.
+
 \bibitem{BerubeISPASS12}
 P.~Berube and J.~N. Amaral, ``Combined profiling: A methodology to capture
   varied program behavior across multiple inputs,'' in \emph{Intern. Symp. on
@@ -97,11 +102,6 @@ R.~Nabinger-Sanchez, J.~N. Amaral, D.~Szafron, M.~Pirvu, and M.~Stoodley,
   ``Using machines to learn method-specific compilation strategies,'' in
   \emph{Code Generation and Optimization ({CGO})}, Chamonix, France, April
   2011.
-
-\bibitem{KulkarniCGO13}
-S.~Kulkarni, J.~cavazos, C.~Wimmer, and D.~Simon, ``Automatic construction of
-  inlining heuristics using machine learning,'' in \emph{Code Generation and
-  Optimization ({CGO})}, Shenzhen, China, February 2013.
 
 \bibitem{Spall1999}
 J.~C. Spall, \emph{Stochastic Optimization: Stochastic Approximation and
