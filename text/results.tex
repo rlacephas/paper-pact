@@ -21,6 +21,183 @@ The third experiment was conducted to verify and
   analyze behavior variability for random choice, simple sort and
   a version of the knapsack problem. Particularly the latter version presented better results.
 
+%Indicating the inliner being evaluated in every performance measure
+%would unacceptably complicate the notation.  When necessary, the
+%identity of the inliner used to generate a result is made clear by
+%context.
+
+This study evaluates 14 instantiations of \FDI\ reward functions,
+along with the \funcname{Benefit} static-reward function,
+single-profile \FDO, and the default \llvm\ inliner.  The version of a
+program transformed by an \FDI\ inliner is referred to simply by
+the \FDI\ reward function used by the inliner.  For example,
+the \funcname{mean} version of a program refers to the version of the
+program created by applying the \FDI\ inliner using
+the \funcname{mean} reward function.  This section outlines how
+performance is measured and evaluated for these inliners, the
+concrete \FDI\ reward functions evaluated, and the set of programs and
+inputs used for the evaluation.
+
+
+\subsection{Measuring Single-Run Performance}
+
+Before an inliner's workload performance can be calculated, execution
+times for runs on individual inputs must be determined.  In this
+study, the execution time of one version of a program on a particular
+input is computed as the 
+%arithmetic average 
+minimum of the execution times of three runs for this pairing.
+Henceforth, any reference to execution time assumes this three-run
+measurement.
+
+The baseline execution time used in this study is obtained using
+the \funcname{Never} static \FDI\ reward function, which
+unconditionally returns -1.0.  Thus, \funcname{Never} will never
+inline any call site where $\CostOf{\CS} > -2$.  Given the definition
+of \CostOf{\CS} from \ref{inlining:scoring}, inlining is thus
+limited to callees containing a single basic block, that are expected
+to increase code size in the caller by no more than 3 instructions.
+
+The performance of a particular version of a program on one input is
+computed as the execution time of that version of the program on that
+input, normalized by the execution time of \funcname{Never} on that
+input.
+
+\REM{
+The default \llvm\ inliner is used as a baseline against which each of
+the alternative inliners are compared.  The baseline execution time
+for input $i$ is \blt{i}.  Both traditional \FDO\ and \FDI\ use a
+training set, $u$.  The execution time on input $i$ for a the version
+of the program trained on $u$ is $t_u(i)$.  Finally, workload
+performance is calculated from normalized execution times: $\ntau_u(i)
+= \frac{t_u(i)}{\blt{i}}$.
+}
+
+\subsection{Static Inlining}
+
+Two static inliners are evaluated: \funcname{Benefit}, and the
+default \llvm\ inliner, \funcname{Static}.  These inliners are
+evaluated by simply taking the geometric mean of their normalized
+execution times over all inputs in \Wfull.
+
+\subsection{Single-Profile \FDO}
+
+Traditional single-profile \FDO\ is referred to in this evaluation as
+the \funcname{Single} inliner.  Inlining is performed using a simple
+point reward function with \FDI, informed by a single profile.  Since
+the profile contains a single value for each monitor, all simple point
+reward functions are equal.  The evaluation uses the leave-one-in
+methodology in a manner similar to that
+of \cite{BerubePhD}. Each input $u \in \Wfull$ is used for
+training, and then evaluated using $\Wfull/\{u\}$.  A performance score
+for $u$ is calculated by taking the geometric mean of those normalized
+times:
+$$ \vect{gm}[u] = \sqrt[|\Wfull-1|]{ \prod_{i\in \Wfull/\{u\}} \ntau_u(i) } $$ 
+The final performance for traditional \FDO\ is computed as the
+geometric mean of each $\vect{\mu_g}[u]$:
+$$ \mu_g = \sqrt[|\Wfull|]{ \prod_{u\in \Wfull} \vect{gm}[u] } $$
+
+
+\subsection{\FDI\ Reward Functions}
+\label{eval:rewards}
+
+The goal of \CP-informed inlining is to increase performance across
+all future program executions by considering the cross-input behavior
+variations captured in the \CProf.  In particular, it strives to
+minimize the worst-case negative impact on the performance of any
+run. Performance degradation (versus an alternative inlining
+algorithm) is caused by a failure to inline call sites that are
+important in one or more program runs.  These missed candidates are
+opportunity costs: the potential benefit of inlining is not realized
+in those runs because the inlining budget was spent on other
+candidates.  It is the responsibility of the reward function to
+prioritize inlining candidates such that this opportunity cost is
+minimized.  However, opportunity cost cuts both ways.  Inlining a call
+that is important in only a small proportion of program runs may
+consequently expend the code-growth budget before more
+generally-beneficial inlining opportunities can be exploited.
+
+%\begin{quote}
+%{\bf Hypothesis:} Most inlining candidates that significantly
+%  impact the performance of any run also improve performance across
+%  most of the workload.  The number of inlining opportunities that are
+%  particularly important for only a minority of runs is a small
+%  fraction of the total number of inlining opportunities that
+%  significantly impact program performance.
+%\end{quote}
+%
+This hypothesis guides the selection of the example reward functions
+evaluated in this study.  If correct, this hypothesis implies that
+scoring inlining candidates by their maximum expected benefit will
+identify both those few candidates that have a large impact in rare
+cases, as well as the candidates that provide benefit for the majority
+of the workload.  Furthermore, weighting candidates by coverage is not
+necessary because the number of rarely-beneficial candidates is
+small.  While inlining these candidates will consume some of the
+inlining budget, this merely prevents inlining a small number of calls
+that are expected to be the least beneficial among the set of calls
+that would otherwise be inlined.
+
+
+%SIMPLEMETRICS = mean max
+%POINTMETRICS = QPointQ=25 \
+%	QPointQ=50 \
+%	QPointQ=75 \
+%	QPLinearQ=50,75 \
+%	QPLinearQ=5,95 \
+%	QPSqrtQ=50,75 \
+%	QPSqrtQ=5,95
+%RANGEMETRICS = QRangeQ=50,100 \
+%	QRangeQ=25,75 \
+%	QRangeQ=5,95 \
+%	QRLinearQ=0,25,75,100 \
+%	QRSqrtQ=0,25,75,100
+
+\begin{table}
+  \centering
+  \begin{tiny}
+  \input{Tables/qpoints}
+  \end{tiny}
+  \caption{Concrete quantile-based reward functions}
+  \label{tab:qpoints}
+\end{table}
+
+As explained in \cite{BerubePhD}, \FDI\ provides three classes
+of reward functions that use combined profiles.  Results are presented
+for the mean and max {\it simple point} rewards, seven concrete
+instantiations of {\it quantile point} rewards, and five concrete
+instantiations of {\it quantile range} rewards.  The quantile points
+selected for these example reward functions are listed
+in \refTable{tab:qpoints}.  The type column, {\bf T}, indicates if the
+reward functions uses (P)oints or (R)anges; this aspect of the reward
+function is also evident in the Quantiles column, where ranges are
+listed in angled brackets.  The combination column, {\bf C}, indicates
+how multiple points or ranges are combined: (L)inearly or
+(N)on-(L)inearly.  Evaluation name provides the notation used to
+identify each inliner in the figures in \cite{BerubePhD}.
+
+The first resward functions sample the quartile boundaries, and
+represent somewhat pessimistic, median and somewhat optimistic
+rewards.  The remaining point metrics represent cases that combine a
+high and a low frequency estimate.  Non-linear combination (sqrt) uses
+a multi-objective approach that balances the importance of the two
+measurements.  The first two range-based rewards consider the weighted
+average frequency over half of the histogram's weight.  The third
+range-based reward uses the weighted average over the whole histogram,
+excluding any high or low outliers.  The final two reward metrics
+combine the weighted average frequency from the top and bottom
+quartiles, balancing optimistic and pessimistic frequency predictions.
+
+The inliners using these reward functions are evaluated according to
+the 3-fold cross-validation methodology proposed in
+\cite{BerubePhD}.  The testing and training sets are
+determined once from a random ordering of the inputs in \Wfull.
+Identical testing and training sets are used in each fold by each
+inliner.  Each input in \Wfull\ is in exactly one testing set, thus the
+workload performance of an inliner is determined by taking the usual
+geometric mean:
+$$ \mu_g = \sqrt[|\Wfull|]{ \prod_{i \in \Wfull} \ntau(i) } $$
+
 \subsection{Programs and Inputs}
 
 
