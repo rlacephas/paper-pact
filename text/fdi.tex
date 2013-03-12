@@ -20,7 +20,7 @@ program.
 \end{algorithm}
 
 What \FDI\ does is to set the problem as one of constrained minimization,
-the {\it Substitution Problem}. So, for a particular program, a subset of
+the {\it Substitution Problem} \cite{Arnold00}. So, for a particular program, a subset of
 all invocations, the values of maximum program size, maximum callee size,
 etc, find a sequence of substitutions that can minimize the expected
 program execution time. And this is done by following the order of the
@@ -30,7 +30,7 @@ score of each candidate.
 The assumption is that this is an efficient reduction of the Knapsack
 Problem to the Substitution Problem \cite{Arnold00,Scheifler1977}. The
 Knapsack Problem is known to be NP-hard \cite{Garey1979}, so it's
-intractable. To peform the reduction, we first assume that it is
+intractable. To perform the reduction, we first assume that it is
 possible to construct an invocation with any integral execution time
 overhead. The second assumption is that it is possible to construct a
 procedure of any integral size less than the maximum.
@@ -126,27 +126,27 @@ procedure of any integral size less than the maximum.
 algorithm used by \FDI.  The algorithm uses several data structures:
 \begin{description}
 
-\item[{\it candidates}]: \\
+\item[{\it candidates:}] \hspace{15,5 pt}
   The worklist is a sorted list of candidates.
   A call site is an inlining candidate if it is a direct call, and if
   the callee does not contain a \name{setjump} nor has any previous
   attempt to inline the callee failed.  Furthermore, the call site
   must have executed at least once during profiling.
 
-\item[{\it ignored}]: \\
+\item[{\it ignored:}] \hspace{5 pt}
   A list of call sites that are not inlining
   candidates.  This list is maintained to enable correct and efficient
   bookkeeping, and to allow any copies of these call sites created by
   inlining their caller to be immediately ignored.
 
-\item[{\it callers}]: \\
+\item[{\it callers:}] \hspace{2 pt}
   A mapping from functions to the call sites that
   call them.  This map allows for the re-scoring of call sites on the
   event that a call is inlined into their callee.  That inlining will
   change the callee's size, and may change the expected
   simplifications possible if the callee is inlined.
 
-\item[{\it inlineResult}]: \\
+\item[{\it inlineResult:}] \hspace{19,5 pt}
   A structure returned by inliner that
   provides summary information regarding the transformation.  In
   particular, it indicates if the attempted inlining failed.

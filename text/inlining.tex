@@ -80,7 +80,7 @@ stack\footnote{Some calling conventions allow values to pass between
   \begin{minipage}[t]{\linewidth}
     \centering
     \subfigure[after constant and copy propagation] {
-      \begin{minipage}[b]{0.25\linewidth}
+      \begin{minipage}[b]{0.40\linewidth}
         \centering
         \includegraphics[height=8.8em]{Figures/fibiter-3}
       \end{minipage}
@@ -88,15 +88,18 @@ stack\footnote{Some calling conventions allow values to pass between
     }
     \hspace{0.07\linewidth}
     \subfigure[after inlining \iname{fibStep} and simplification] {
-      \begin{minipage}[b]{0.25\linewidth}
+      \begin{minipage}[b]{0.40\linewidth}
         \centering
         \includegraphics[height=8.8em]{Figures/fibiter-4}
       \end{minipage}
       \label{fibiter:fibstep}
     }
+    \vspace{1em}
+    \hrule
+    \vspace{1em}
     \hspace{0.07\linewidth}
     \subfigure[after loop unrolling and scalar promotion] {
-      \begin{minipage}[b]{0.24\linewidth}
+      \begin{minipage}[b]{0.34\linewidth}
         \centering
         \includegraphics[height=8.8em]{Figures/fibiter-5}
       \end{minipage}

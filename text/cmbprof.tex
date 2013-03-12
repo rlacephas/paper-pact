@@ -32,7 +32,7 @@ of users, assembling an appropriately representative workload may be a
 difficult task.  Picking a solitary training run to represent such a
 space is far more challenging, or potentially impossible, if use-cases
 are mutually-exclusive.  While benchmark programs can be modified to
-combine such use-cases into a single run %(\refSection{single:spec}),
+combine such use-cases into a single run, %(\refSection{single:spec}),
 this approach is obviously inapplicable to real programs.  Moreover,
 user workloads are prone to change over time.  Ensuring stable
 performance across all inputs in today's workload prevents performance
@@ -195,24 +195,24 @@ the \CFG, and edges in the line graph correspond to adjacencies
 between the edges of the \CFG.
 %This technique may be similarly applied to a call-graph.
 
-Decomposing a \CFG\ into a hierarchy of dominating regions to enable
-\HN\ is achieved by constructing its dominator tree. Each edge in the
-\CFG\ is represented by a node in the dominator tree.  Denote the
-immediate proper dominator of \CFG\ edge $e$ by $dom(e)$.  Each non-leaf
-node $n(e)$ in the dominator tree is the head of a region $G_e$, which,
-by construction, encompasses any regions entered through descendants of
-$e$.  To prepare a raw profile for combination with other profiles,
-the frequency $f_e$ of each non-root node $n(e)$ is normalized against
-the frequency of its immediate proper dominator, $f_{dom(e)}$.
-The ratio of these two frequencies is invariant when a branch
-probability or loop iteration count is (dynamically) constant.
-This process also prevents variable behavior in an outer loop from masking
-consistent behaviors within the loop.  Normalization proceeds in a
-bottom-up traversal of the dominator tree, so that the head of a
-region is normalized to its immediate dominator only after all of its
-descendents have been normalized.  The root of the dominator tree,
-\ie, the edge representing entry into the procedure, is assigned a
-``normalized'' value of 1.
+%Decomposing a \CFG\ into a hierarchy of dominating regions to enable
+%\HN\ is achieved by constructing its dominator tree. Each edge in the
+%\CFG\ is represented by a node in the dominator tree.  Denote the
+%immediate proper dominator of \CFG\ edge $e$ by $dom(e)$.  Each non-leaf
+%node $n(e)$ in the dominator tree is the head of a region $G_e$, which,
+%by construction, encompasses any regions entered through descendants of
+%$e$.  To prepare a raw profile for combination with other profiles,
+%the frequency $f_e$ of each non-root node $n(e)$ is normalized against
+%the frequency of its immediate proper dominator, $f_{dom(e)}$.
+%The ratio of these two frequencies is invariant when a branch
+%probability or loop iteration count is (dynamically) constant.
+%This process also prevents variable behavior in an outer loop from masking
+%consistent behaviors within the loop.  Normalization proceeds in a
+%bottom-up traversal of the dominator tree, so that the head of a
+%region is normalized to its immediate dominator only after all of its
+%descendents have been normalized.  The root of the dominator tree,
+%\ie, the edge representing entry into the procedure, is assigned a
+%``normalized'' value of 1.
 
 %In order to understand the capabilities and limitations of a
 %statistical model incorporating \HN, and to use it correctly, the
@@ -341,34 +341,34 @@ of queries about the measured program behavior.  The implementation of
 methods of a monitor's histogram:
 \begin{description}
 
-\item[$H.\mathrm{min}, H.\mathrm{max}$]: \\
+\item[$H.\mathrm{min}, H.\mathrm{max}$]: 
 %  The maximum and non-zero
 %  minimum monitor value observed, as in ~\cite{BerubePhD}.
 
-\item[$H.\mathrm{mean}(\mathit{incl0s})$]: \\
+\item[$H.\mathrm{mean}(\mathit{incl0s})$]: 
 %  The true weighted average of
 %  observed monitor values.  If {\it incl0s} is true, count raw
 %  profiles where the monitor did not execute as 0-valued observations,
 %  as in ~\cite{BerubePhD}.
 
-\item[$H.\mathrm{stdev}(\mathit{incl0s})$]: \\
+\item[$H.\mathrm{stdev}(\mathit{incl0s})$]: 
 %  The true weighted standard
 %  deviation of observed monitor values.  If {\it incl0s} is true,
 %  count raw profiles where the monitor did not execute as 0-valued
 %  observations, as in ~\cite{BerubePhD}.
 
-\item[$H.\mathrm{estProbLessThan}(v)$]: \\
+\item[$H.\mathrm{estProbLessThan}(v)$]: 
 %  Estimates the value of the
 %  monitor's CDF at $v$, \ie, $\P(R \le v)$.  The estimation is based
 %  on the assumed uniform distribution of bins.
 
-\item[$H.\mathrm{quantile(q)}$]: \\
+\item[$H.\mathrm{quantile(q)}$]: 
 %  For $0 \le q \le 1$, estimates the
 %  (minimum) value $v$ at the point where the monitor's CDF equals $q$,
 %  \ie, $v$ when $\P(R \le v) = q$.  The estimation is based on the
 %  assumed uniform distribution of bins.
 
-\item[$H.\mathrm{applyOnRange}(F(w,v),\mathit{vmin},\mathit{vmax})$]: \\
+\item[$H.\mathrm{applyOnRange}(F(w,v),\mathit{vmin},\mathit{vmax})$]: 
 %  Computes the sum of applying the function $F(w,v)$ to the impulses
 %  of the histogram in the range $[\mathit{vmin}, \mathit{vmax}]$, as
 %  with the multiplication of histograms in ~\cite{BerubePhD}.
@@ -376,15 +376,15 @@ methods of a monitor's histogram:
 %  proportional to the overlap of the bin with the range, and the
 %  impulse's value is the midpoint of the overlapping range.
 
-\item[$H.\mathrm{applyOnQuantile}(F(w,v),\mathit{qmin},\mathit{qmax})$]: \\
+\item[$H.\mathrm{applyOnQuantile}(F(w,v),\mathit{qmin},\mathit{qmax})$]: 
 %  Like applyOnRange, but the range is set using the values associated
 %  with the quantile points {\it qmin} and {\it qmax}.
 
-\item[$H.\mathrm{coverage}$]: \\
+\item[$H.\mathrm{coverage}$]: 
 %  The probability of the monitor executing
 %  in a run of the program, computed as $\frac{H.W}{H.\mathit{TW}}$.
 
-\item[$H.\mathrm{span}$]: \\
+\item[$H.\mathrm{span}$]: 
 %  The ratio between the range of the histogram
 %  and its maximum value, computed as $\frac{H.\mathrm{max} -
 %    H.\mathrm{min}}{H.\mathrm{max}}$.
@@ -392,19 +392,19 @@ methods of a monitor's histogram:
 \end{description}
 
 
-The mean value of a monitor is analogous to the value provided by a
-single raw profile, and provides the desired substitutability of a
-\CProf\ for a raw profile in existing \FDO\ transformations.
-
-\REM{ along with the standard deviation and minimum and maximum
-  values.  Furthermore, \CP\ can estimate from a monitor's Cumulative
-  Distribution Function (CDF) the probability that the monitor is
-  within a (possibly half-bounded) range.  Conversely, the inverse CDF
-  provides estimates of the thresholds corresponding to a given
-  quantity of probability mass.  For example, the inverse CDF
-  facilitates estimating the median value of a monitor.
-}
-
+%The mean value of a monitor is analogous to the value provided by a
+%single raw profile, and provides the desired substitutability of a
+%\CProf\ for a raw profile in existing \FDO\ transformations.
+%
+%\REM{ along with the standard deviation and minimum and maximum
+%  values.  Furthermore, \CP\ can estimate from a monitor's Cumulative
+%  Distribution Function (CDF) the probability that the monitor is
+%  within a (possibly half-bounded) range.  Conversely, the inverse CDF
+%  provides estimates of the thresholds corresponding to a given
+%  quantity of probability mass.  For example, the inverse CDF
+%  facilitates estimating the median value of a monitor.
+%}
+%
 %The additional statistical information provided by a \CProf\ allows an
 %\FDO\ heuristic to quantify the expected trade-offs between various
 %workload-performance measurements, such as between the impact on the
@@ -424,7 +424,8 @@ are provided by the implementation of an \FDO\ inliner using
 \CP\ described in \cite{BerubePhD}.
 
 
-\subsection{Extensions and Alternative Usage}
+%\subsection{Extensions and Alternative Usage}
+\subsection{Alternative Usage}
 \label{cp:extend}
 
 The empirical-distribution methodology of \CP\ is orthogonal to the
@@ -435,8 +436,8 @@ performance-counter, and sampled profiles.  The main issue when
 combining profiles is how normalization should be done in order to
 preserve program-behavior characteristics.
 
-\subsubsection{\CFG\ Paths}
-
+%\subsubsection{\CFG\ Paths}
+%
 %\begin{figure}
 %  \centering
 %  \includegraphics[width=0.50\linewidth]{Figures/pathnorm}
@@ -445,32 +446,32 @@ preserve program-behavior characteristics.
 %    times per iteration of $L_1$.}
 %  \label{fig:pathnorm}
 %\end{figure}
-
-An algorithm that collects path profiling in a program that contains
-loops must break cycles.  The most commonly used technique to break
-such cycles is due to Ball and Larus~\cite{BallLarusMICRO96}. Given a
-simple loop, the main idea is to replace the back edge with a set of
-sub-paths that include (a) a path from a point outside the loop to the
-end of the first iteration, (b) a path from the loop entry point to a
-point outside the loop, and (c) a path from the entry point to the
-exit point in the loop.
+%
+%An algorithm that collects path profiling in a program that contains
+%loops must break cycles.  The most commonly used technique to break
+%such cycles is due to Ball and Larus~\cite{BallLarusMICRO96}. Given a
+%simple loop, the main idea is to replace the back edge with a set of
+%sub-paths that include (a) a path from a point outside the loop to the
+%end of the first iteration, (b) a path from the loop entry point to a
+%point outside the loop, and (c) a path from the entry point to the
+%exit point in the loop.
 % \refFigure{fig:pathnorm} illustrates some of
 %the paths inserted to replace the two back edges in a double-nested
 %loop.
-
-Hierarchical normalization must be adapted to work with paths because
-there are no dominance relationships between paths. Consider two runs
-of a double-nested loop, where the outer
-loop $L_1$ iterates a total of $k=10,000$ times in the first run, and
-$k=100$ times in the second run.  In both cases the inner loop $L_2$
-iterates 10 times per iteration of $L_1$.  A combined profile should
-identify the path of execution within $L_1$ as consistent across runs,
-but should indicate that the frequency of the paths into and out of
-$L_1$ vary significantly from run to run. The solution is to normalize
-path frequencies with respect to the frequency of the vertex that
-starts the path.  For instance, P4 should be normalized to the
-frequency of $L_2$ to factor out $k$ and preserve the constant nature
-of the inner loop.
+%
+%Hierarchical normalization must be adapted to work with paths because
+%there are no dominance relationships between paths. Consider two runs
+%of a double-nested loop, where the outer
+%loop $L_1$ iterates a total of $k=10,000$ times in the first run, and
+%$k=100$ times in the second run.  In both cases the inner loop $L_2$
+%iterates 10 times per iteration of $L_1$.  A combined profile should
+%identify the path of execution within $L_1$ as consistent across runs,
+%but should indicate that the frequency of the paths into and out of
+%$L_1$ vary significantly from run to run. The solution is to normalize
+%path frequencies with respect to the frequency of the vertex that
+%starts the path.  For instance, P4 should be normalized to the
+%frequency of $L_2$ to factor out $k$ and preserve the constant nature
+%of the inner loop.
 
 
 %\subsubsection{Program Call-Graphs}

@@ -126,19 +126,19 @@ generally-beneficial inlining opportunities can be exploited.
 %  significantly impact program performance.
 %\end{quote}
 %
-This hypothesis guides the selection of the example reward functions
-evaluated in this study.  If correct, this hypothesis implies that
-scoring inlining candidates by their maximum expected benefit will
-identify both those few candidates that have a large impact in rare
-cases, as well as the candidates that provide benefit for the majority
-of the workload.  Furthermore, weighting candidates by coverage is not
-necessary because the number of rarely-beneficial candidates is
-small.  While inlining these candidates will consume some of the
-inlining budget, this merely prevents inlining a small number of calls
-that are expected to be the least beneficial among the set of calls
-that would otherwise be inlined.
-
-
+%This hypothesis guides the selection of the example reward functions
+%evaluated in this study.  If correct, this hypothesis implies that
+%scoring inlining candidates by their maximum expected benefit will
+%identify both those few candidates that have a large impact in rare
+%cases, as well as the candidates that provide benefit for the majority
+%of the workload.  Furthermore, weighting candidates by coverage is not
+%necessary because the number of rarely-beneficial candidates is
+%small.  While inlining these candidates will consume some of the
+%inlining budget, this merely prevents inlining a small number of calls
+%that are expected to be the least beneficial among the set of calls
+%that would otherwise be inlined.
+%
+%
 %SIMPLEMETRICS = mean max
 %POINTMETRICS = QPointQ=25 \
 %	QPointQ=50 \
@@ -176,17 +176,17 @@ how multiple points or ranges are combined: (L)inearly or
 (N)on-(L)inearly.  Evaluation name provides the notation used to
 identify each inliner in the figures in \cite{BerubePhD}.
 
-The first resward functions sample the quartile boundaries, and
-represent somewhat pessimistic, median and somewhat optimistic
-rewards.  The remaining point metrics represent cases that combine a
-high and a low frequency estimate.  Non-linear combination (sqrt) uses
-a multi-objective approach that balances the importance of the two
-measurements.  The first two range-based rewards consider the weighted
-average frequency over half of the histogram's weight.  The third
-range-based reward uses the weighted average over the whole histogram,
-excluding any high or low outliers.  The final two reward metrics
-combine the weighted average frequency from the top and bottom
-quartiles, balancing optimistic and pessimistic frequency predictions.
+%The first reward functions sample the quartile boundaries, and
+%represent somewhat pessimistic, median and somewhat optimistic
+%rewards.  The remaining point metrics represent cases that combine a
+%high and a low frequency estimate.  Non-linear combination (sqrt) uses
+%a multi-objective approach that balances the importance of the two
+%measurements.  The first two range-based rewards consider the weighted
+%average frequency over half of the histogram's weight.  The third
+%range-based reward uses the weighted average over the whole histogram,
+%excluding any high or low outliers.  The final two reward metrics
+%combine the weighted average frequency from the top and bottom
+%quartiles, balancing optimistic and pessimistic frequency predictions.
 
 The inliners using these reward functions are evaluated according to
 the 3-fold cross-validation methodology proposed in
@@ -292,7 +292,7 @@ compression level.  The decompression set is composed of:
 \item {\tt auriel}: The ``Auriel's Retreat'' land-mass addition mod by
   lance4791 for the game ``The Elder Scrolls IV: Oblivion'' from
   Bethesda
-  Softworks\footnote{http://planetelderscrolls.gamespy.com/View.php?view=OblivionMods.Detail\&id=5949}.
+  Softworks\footnote{http://planetelderscrolls.gamespy.com/View.php?view=\\ \hspace*{150 pt}OblivionMods.Detail\&id=5949}.
 
 \item {\tt gcc-453}: The source-code archive of the \gcc\ compiler,
   version 4.5.3\footnote{http://gcc.gnu.org/gcc-4.5}.

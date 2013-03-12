@@ -64,10 +64,6 @@ P.~Berube, A.~Preuss, and J.~N. Amaral, ``Combined profiling: practical
   0.4em\relax New York, NY, USA: {ACM}, 2011, pp. 493--498, work-In-Progress
   Session.
 
-\bibitem{BallLarusMICRO96}
-T.~Ball and J.~R. Larus, ``Efficient path profiling,'' in \emph{Intern.
-  Symposium on Microarchitecture ({MICRO})}, Paris, France, 1996, pp. 46--57.
-
 \bibitem{LattnerAdveCGO04}
 C.~Lattner and V.~Adve, ``{LLVM: A Compilation Framework for Lifelong Program
   Analysis \& Transformation},'' in \emph{Code Generation and Optimization
@@ -138,13 +134,8 @@ C.~Krintz and B.~Calder, ``Using annotations to reduce dynamic optimization
   ({PLDI})}, Snowbird, Utah, 2001, pp. 156--167.
 
 \bibitem{Sandya04}
-\BIBentryALTinterwordspacing
 S.~M. Sandya, ``Jazzing up {JVM}s with off-line profile data: {D}oes it pay?''
-  \emph{{SIGPLAN} Notices}, vol.~39, no.~8, pp. 72--80, Aug. 2004. [Online].
-  Available:
-  \url{http://doi.acm.org.login.ezproxy.library.ualberta.ca/10.1145/1026474.10%
-26485}
-\BIBentrySTDinterwordspacing
+  \emph{{SIGPLAN} Notices}, vol.~39, no.~8, pp. 72--80, Aug. 2004.
 
 \bibitem{ArnoldOOPSLA05}
 M.~Arnold, A.~Welc, and V.~T. Rajan, ``Improving virtual machine performance
@@ -161,13 +152,9 @@ S.~Savari and C.~Young, ``Comparing and combining profiles,'' \emph{Journal of
   Instruction-Level Parallelism}, vol.~2, May 2000.
 
 \bibitem{ShenSIGOPS09}
-\BIBentryALTinterwordspacing
 X.~Shen, F.~Mao, K.~Tian, and E.~Z. Zhang, ``The study and handling of program
   inputs in the selection of garbage collectors,'' \emph{SIGOPS Opererating
-  Systems Review}, vol.~43, no.~3, pp. 48--61, Jul. 2009. [Online]. Available:
-  \url{http://doi.acm.org.login.ezproxy.library.ualberta.ca/10.1145/1618525.16%
-18531}
-\BIBentrySTDinterwordspacing
+  Systems Review}, vol.~43, no.~3, pp. 48--61, Jul. 2009.
 
 \bibitem{Zhao03}
 P.~Zhao and J.~N. Amaral, ``To inline or not to inline? {Enhanced} inlining
