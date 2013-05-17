@@ -206,7 +206,8 @@ More details on Benefit and Cost functions can be found in \cite{BerubePhD}.
 The best candidate to inlining is found by its own score. The way it is
 done is simply sorting the candidates list by their score values. So
 every time a new candidate is needed, just take the top one from the
-ordered list of candidates.
+ordered list of candidates. Line $05$ of \refAlgorithm{alg:fdiworklist}
+shows this choice.
 
 But the ordering depends on scoring, and scoring is sensitive to some
 parameters values. For instance, the expected reduction/expansion for each
@@ -229,9 +230,18 @@ calibrate the scores is to run the system on some known benchmarks. This way
 the parameters can be calibrated to their best values, those who produce
 the best estimates.
 
-So there is a need to find a ``sweetspot'' on these values. The first idea is
+So there is a need to find a ``sweetspot'' on these values. The first idea was
 to apply machine learning techniques to search for it through a space of
 possible values. But there are also some issues, we cannot afford to have a
 huge number of acquisition points because the whole system takes a long time
 to process. Also, optimizing a function without knowing if it is differentiable,
 or convex, is not a trivial machine learning task.
+
+But the simple choice of a candidate may be done in other ways, for instance
+considering the current budget value, the expenditure of the candidates, etc.
+In sectionref{sec:choice} we propose and measure the performance of two other
+different algorithms for the task of choosing the best candidate for the
+inliner, and compare them with the one used in \refAlgorithm{alg:fdiworklist}.
+The first is a ``more complete'' implementation of the knapsack algorithm,
+and the second represents the null hypotheses, is a random choice. We defined
+our algorithm empirically, based on the data we have collected.
