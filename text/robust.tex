@@ -1,0 +1,60 @@
+
+Our experiments have shown that the variance running the same data just three times in a row is not quite different from the $100$ times, when we consider each run a three-times-in-a-row run, which means running $300$ times the same experiment. What this result means is that we empirically verified the robustness of the \CP\ methodology. As figures \refFigure{fig:CProbust} below show, the deviation from the mean is not large (\refFigure{CP:mean}), as much as the deviation from the median (\refFigure{CP:median}).
+
+\begin{figure}
+  \centering
+  
+  \begin{minipage}[t]{\linewidth}
+    \subfigure[Each $3$-times mean run comparing with the $300$-times run mean] {
+      \begin{minipage}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=12em]{Figures/CPmean}
+      \end{minipage}
+      \label{CP:mean}
+    }
+    \subfigure[Each $3$-times median run comparing with the $300$-times run median] {
+      \begin{minipage}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[height=12em]{Figures/CPmedian}
+      \end{minipage}
+      \label{CP:median}
+    }
+  \end{minipage}
+  \caption{$100$-times running $3$-times experiment}
+  \label{fig:CProbust}
+\end{figure}
+
+The data used in the experiment is shown in \refTable{tab:simStats}, and the deviations from the mean (and median) to each $3$-time run are summarized as the average, minimum, and maximum values, all found on the $300$-run experiment.
+
+\begin{table}
+  \centering
+  \begin{tiny}
+  \input{Tables/simStats}
+  \end{tiny}
+  \caption{Deviation from the mean and from the median in the experiment}
+  \label{tab:simStats}
+\end{table}
+
+We also ran the t-tests to show that the means (and the medians) are statistically representing the same distribution. This is summarized in \refTable{tab:statTest} below.
+
+\begin{table}
+  \centering
+  \begin{tiny}
+  \input{Tables/statTest}
+  \end{tiny}
+  \caption{Test on the means and medians}
+  \label{tab:statTest}
+\end{table}
+
+This experiment brought us confidence in the machine learning method we devised to tune-in the compiler parameters. We considered the possibility of increasing the number of times each individual run need to be performed, in order to achieve low variance in the data; hence we could trust the results. As this experiment has shown, the $3$-times run is a good choice, because it does not penalize the total running time too much. We show these data in \refTable{tab:runTime}, where the $y$-axis reflects the running time for each program on each input data on the $x$-axis.
+
+\begin{table}
+  \centering
+  \begin{tiny}
+  \input{Tables/runTime}
+  \end{tiny}
+  \caption{Running time of experiments, considering $3$-times run}
+  \label{tab:runTime}
+\end{table}
+
+If we had to run more than three times, say $n$ times, the total running time would be increased for a factor of $k$, where $k = \frac{n}{3}$, which, in case $n = 9$, would result in a running time three times bigger than we had in this experiment.

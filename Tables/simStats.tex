@@ -1,0 +1,26 @@
+
+\begin{tabular}{lllll}
+
+{\bf T} & {\bf C} & {\bf Quantiles (\%)} & 
+  {\bf Description} & {\bf Evaluation Name} \\ \hline
+
+P & -- & 25 & first quartile   & QPointQ=25 \\
+P & -- & 50 & estimated median & QPointQ=50 \\
+P & -- & 75 & third quartile   & QPointQ=75 \\
+
+P & L & 50, 75 & average and optimistic      & QPLinearQ=50,75 \\
+P & NL   & 50, 75 &                             & QPSqrtQ=50,75   \\
+P & L & 5, 95  & worst and best w/o outliers & QPLinearQ=5,95  \\
+P & NL   & 5, 95  &                             & QPSqrtQ=5,95    \\
+
+R & -- & \pair{50}{100} & top half: optimistic & QRangeQ=50,100 \\
+R & -- & \pair{25}{75}  & ``central'' average  & QRangeQ=25,75  \\
+R & -- & \pair{5}{95}   & average w/o outliers & QRangeQ=5,95   \\
+
+R & L & \pair{0}{25}, \pair{75}{100} & pessimistic and optimistic
+  & QRLinearQ=0,25,75,100 \\
+R & NL   & \pair{0}{25}, \pair{75}{100} & 
+  & QRSqrtQ=0,25,75,100 \\
+
+\hline
+\end{tabular}
