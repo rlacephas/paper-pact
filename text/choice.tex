@@ -10,7 +10,34 @@ based on the score function. As the score takes into account estimated values fo
 benefit and cost of inlining, we suggest to use it but aggregating the expenditure,
 the budget, and other scores besides the most fitted.
 
-The idea is to perform a knapsack algorithm considering all the scores above zero
-and the budget (the ``size'' of the knapsack). Proceeding this way we can optimize
-the amount of budget wasted for inlining.
+The idea is to perform a more compĺete version of the knapsack algorithm considering
+all the scores above zero and the budget (the ``size'' of the knapsack). Proceeding
+this way we can optimize the amount of budget wasted for inlining.
 
+To make sure that there is some room for improvement in the choice of the next
+function to be inlined, we are comparing the original choice (just using the highest
+score) with two different ways of choosing, a random choice, and the ``more complete''
+knapsack choice. Our experiments have shown that there is a best way of choosing the
+candidates for the inliner, table \refTable{tab:choice} shows the results for these
+three algorithms.\rr{table \refTable{tab:choice} is dummy}
+
+\begin{table}
+  \centering
+  \begin{tiny}
+  \input{Tables/choice}
+  \end{tiny}
+  \caption{Running time of experiments, considering $3$-times run}
+  \label{tab:choice}
+\end{table}
+
+The results shown in figure \refFigure{fig:choice} refer to the geometric mean of all
+the runs for each program and each input data. We have the running time for each program
+in the $y$-axis, and the programs and input data on the $x$-axis. The performance of the
+three different algorithms are shown for comparison.\rr{figure \refFigure{fig:choice} is dummy}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.50\linewidth]{Figures/choice}
+  \caption{Algorithms for choosing the candidates}
+  \label{fig:choice}
+\end{figure}
