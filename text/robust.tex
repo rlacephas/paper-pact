@@ -8,7 +8,7 @@ To show the gaussian variation in the data we collect, figure \refFigure{fig:gau
   \label{fig:gauss}
 \end{figure}
 
-We ran $10$-times, after that $100$-times and after that $1000$-times, we needed to confirm that there is no difference on their means, and also that we can discard the outliers. To make sure that we have robust measures, we ran some simple statistics to know the mean, median, standard-deviation form the mean (std-mean), and the standard-deviation from the median (std-median), shown in \refTable{tab:robustTest}. We also ran t-tests on each sample pairs to verify if their means were the same, the results for the t-tests are shown in \refTable{tab:ttest} below.
+We ran three independent experiments, the first is the $10$-times experiment, then $100$-times and, after that, $1000$-times, because we needed to confirm that there is no difference on their means, and also that we can discard the outliers. To make sure that we have robust measures, we ran some simple statistics to know the mean, the median, the standard-deviation from the mean (std-mean), and the standard-deviation from the median (std-median), shown in \refTable{tab:robustTest}. We also ran t-tests on each sample pairs to verify if their means were the same, the results for the t-tests are shown in \refTable{tab:ttest} below.
 
 \begin{table}
   \centering
@@ -19,6 +19,8 @@ We ran $10$-times, after that $100$-times and after that $1000$-times, we needed
   \label{tab:robustTest}
 \end{table}
 
+The t-tests in \refTable{tab:ttest} show that the null hypothesis cannot be discarded, as the value $0$ in each line of the \emph{t-test} column confirms. The \emph{p-values} illustrates the confidence in the hypothesis, in this case, that the means are different.
+
 \begin{table}
   \centering
   \begin{tiny}
@@ -28,21 +30,22 @@ We ran $10$-times, after that $100$-times and after that $1000$-times, we needed
   \label{tab:ttest}
 \end{table}
 
-\rr{Probably running 3-times will not be enough, if the running time for a data set is much higher than the running time of this exercise, we have to expect much more noise in the data, but it will be embedded in the data, therefore impossible to extract directly. The only countermeasure is to increase the number of times we run each program from 3 to 5, maybe this could be enough.}
-Our experiments have shown that the variance running the same data just three times in a row is not quite different from the $100$ times, when we consider each run a three-times-in-a-row run, which means running $300$ times the same experiment. What this result means is that we empirically verified the robustness of the \CP\ methodology. As figure \refFigure{fig:CProbust} below shows, the deviation from the mean is not large (\refFigure{CP:mean}), as much as the deviation from the median (\refFigure{CP:median}).  In these figures the $y$-axis reflects the running time for each program on each input data on the $x$-axis.\rr{All other figures in this section figures are dummy}
+\rr{Probably running 3-fold will not be enough, if the running time for a data set is much higher than the running time of this exercise, we have to expect much more noise in the data, but it will be embedded in the data, therefore impossible to extract directly. The only countermeasure is to increase the number of times we run each program from 3 to 5, maybe this could be enough.}
+
+Our experiments have shown that the variance running the same data just three times in a row is not quite different from the $100$ times, when we consider each run a three-fold run, which means running $300$ times the same experiment. What this result means is that we empirically verified the robustness of the \CP\ methodology. As figure \refFigure{fig:CProbust} below shows, the deviation from the mean is not large (\refFigure{CP:mean}), as much as the deviation from the median (\refFigure{CP:median}).  In these figures the $y$-axis reflects the running time for each program on each input data on the $x$-axis.\rr{All other figures in this section figures are dummy}
 
 \begin{figure}
   \centering
   
   \begin{minipage}[t]{\linewidth}
-    \subfigure[Each $3$-times mean run comparing with the $300$-times run mean] {
+    \subfigure[Each $3$-fold mean run compared with the $300$-times run mean] {
       \begin{minipage}[b]{0.45\textwidth}
         \centering
         \includegraphics[height=12em]{Figures/CPmean}
       \end{minipage}
       \label{CP:mean}
     }
-    \subfigure[Each $3$-times median run comparing with the $300$-times run median] {
+    \subfigure[Each $3$-fold median run compared with the $300$-times run median] {
       \begin{minipage}[b]{0.45\textwidth}
         \centering
         \includegraphics[height=12em]{Figures/CPmedian}
@@ -54,7 +57,7 @@ Our experiments have shown that the variance running the same data just three ti
   \label{fig:CProbust}
 \end{figure}
 
-The data used in the experiment is shown in \refTable{tab:simStats}, and the deviations from the mean (and median) to each $3$-time run are summarized as the average, minimum, and maximum values, all found on the $300$-run experiment.\rr{All other tables in this section figures are dummy}
+The data used in the experiment are shown in \refTable{tab:simStats}, and the deviations from the mean (and median) to each $3$-fold run are summarized as the average, minimum, and maximum values, all found on the $300$-times experiment.\rr{All other tables in this section figures are dummy}
 
 \begin{table}
   \centering
@@ -76,7 +79,7 @@ We also ran the t-tests to show that the means (and the medians) are statistical
   \label{tab:statTest}
 \end{table}
 
-This experiment brought us confidence in the machine learning method we devised to tune-in the compiler parameters. We considered the possibility of increasing the number of times each individual run need to be performed, in order to achieve low variance in the data; hence we could trust the results. As this experiment has shown, the $3$-times run is a good choice, because it does not penalize much the total running time. We show these data in \refTable{tab:runTime}.
+This experiment brought us confidence in the machine learning method we devised to tune-in the compiler parameters. We considered the possibility of increasing the number of times each individual run need to be performed, in order to achieve low variance in the data; hence we could trust the results. As this experiment has shown, the $3$-fold run is a good choice, because it does not penalize much the total running time. We show these data in \refTable{tab:runTime}.
 
 \begin{table}
   \centering
